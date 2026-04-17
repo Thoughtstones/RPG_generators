@@ -43,27 +43,59 @@
 
         #treasure-output {
             margin: 25px auto 0;
-            max-width: 900px;
+            max-width: 980px;
             text-align: left;
-            font-size: 18px;
-            line-height: 1.5;
+            font-size: 17px;
+            line-height: 1.45;
             border: 1px solid #ccc;
             padding: 18px;
             border-radius: 8px;
             background: #fafafa;
         }
 
-        #treasure-output h2 {
-            margin-top: 0;
+        #treasure-output h2,
+        #treasure-output h3 {
             text-align: center;
         }
 
-        #treasure-output h3 {
-            margin-bottom: 8px;
+        #treasure-output h2 {
+            margin-top: 0;
         }
 
         #treasure-output ul {
             margin-top: 6px;
+        }
+
+        .slot-block {
+            margin-bottom: 18px;
+            padding: 12px;
+            background: #fff;
+            border: 1px solid #ddd;
+            border-radius: 6px;
+        }
+
+        .item-card {
+            margin: 10px 0;
+            padding: 10px;
+            background: #f4f4f4;
+            border-left: 4px solid #888;
+            border-radius: 4px;
+        }
+
+        .item-name {
+            font-weight: bold;
+            font-size: 1.05em;
+        }
+
+        .meta {
+            color: #444;
+            font-size: 0.95em;
+            margin: 4px 0 6px;
+        }
+
+        .small-note {
+            font-size: 0.92em;
+            color: #555;
         }
     </style>
 </head>
@@ -115,248 +147,1296 @@
         const itemLibrary = {
             1: {
                 permanent: [
-                    { name: "Healer's Gloves", desc: "Boosts medicine-focused healing and provides a small magical healing effect." },
-                    { name: "Crafter's Eyepiece", desc: "Helps identify items and improves crafting precision." },
-                    { name: "Bag of Holding (Type I)", desc: "Holds far more Bulk than a normal container." },
-                    { name: "Hat of Disguise", desc: "Lets the wearer alter their appearance with illusion magic." },
-                    { name: "Cloak of Elvenkind", desc: "Improves stealth and helps the wearer blend into surroundings." },
-                    { name: "Goggles of Night", desc: "Improves vision in darkness or grants darkvision." },
-                    { name: "Traveler's Any-Tool", desc: "Transforms into many simple tools as needed." },
-                    { name: "Wand of Heal (1st-rank)", desc: "Casts heal once each day." },
-                    { name: "Wand of Magic Missile (1st-rank)", desc: "Fires reliable force bolts once per day." },
-                    { name: "Lifting Belt", desc: "Helps with Athletics tasks and carrying heavy loads." },
-                    { name: "Pendant of the Occult", desc: "Assists with occult knowledge and related magic." },
-                    { name: "Religious Symbol (Blessed)", desc: "A minor divine focus item useful for faithful characters." },
-                    { name: "Feather Token", desc: "A minor magical token with a single-use utility effect." },
-                    { name: "Boots of Bounding", desc: "Improves jumping and mobility." },
-                    { name: "Snarecrafter's Toolkit (Enchanted)", desc: "A magical toolkit suited to traps and snares." },
-                    { name: "Crafters' Toolbelt", desc: "Keeps tools organized and ready at hand." },
-                    { name: "Spellbook of Cantrips", desc: "A magical spellbook containing useful arcane basics." },
-                    { name: "Sturdy Shield (Minor)", desc: "A tougher-than-normal shield for repeated blocking." },
-                    { name: "Handwraps of Mighty Blows +1", desc: "Improves unarmed attacks with magical potency." },
-                    { name: "Weapon Potency Rune +1", desc: "Increases the accuracy of a weapon." },
-                    { name: "Armor Potency Rune +1", desc: "Improves the protective value of armor." },
-                    { name: "Doubling Rings", desc: "Copies runes between paired weapons for easier switching." },
-                    { name: "Everburning Torch", desc: "Produces permanent magical light." },
-                    { name: "Marvelous Miniatures (Assorted)", desc: "Small magical figurines with useful trick effects." }
+                    {
+                        name: "Healer's Gloves",
+                        level: 4,
+                        traits: "Invested, Magical",
+                        usage: "Worn gloves",
+                        activation: "Passive / activated healing effect",
+                        frequency: "Typically daily for the healing ability",
+                        mechanics: "Provides an item bonus to Medicine checks and a small magical healing effect.",
+                        summary: "Excellent support item for a Medicine-focused character."
+                    },
+                    {
+                        name: "Crafter's Eyepiece",
+                        level: 3,
+                        traits: "Invested, Magical",
+                        usage: "Worn eyepiece",
+                        activation: "Passive",
+                        frequency: "Constant",
+                        mechanics: "Helps with identifying and crafting by improving precision and reducing guesswork.",
+                        summary: "Best on a crafter or item-identification specialist."
+                    },
+                    {
+                        name: "Bag of Holding (Type I)",
+                        level: 4,
+                        traits: "Extradimensional, Magical",
+                        usage: "Held or worn",
+                        activation: "Passive",
+                        frequency: "Constant",
+                        mechanics: "Stores much more Bulk than a normal container.",
+                        summary: "Pure utility; helps parties carry treasure and exploration gear."
+                    },
+                    {
+                        name: "Hat of Disguise",
+                        level: 2,
+                        traits: "Illusion, Invested, Magical",
+                        usage: "Worn hat",
+                        activation: "Interact",
+                        frequency: "At will or repeated use",
+                        mechanics: "Lets the wearer alter appearance with illusion magic.",
+                        summary: "Strong social and infiltration item."
+                    },
+                    {
+                        name: "Cloak of Elvenkind",
+                        level: 5,
+                        traits: "Invested, Magical",
+                        usage: "Worn cloak",
+                        activation: "Passive",
+                        frequency: "Constant",
+                        mechanics: "Improves stealth and blending into surroundings.",
+                        summary: "Great for scouts and rogues."
+                    },
+                    {
+                        name: "Goggles of Night",
+                        level: 5,
+                        traits: "Invested, Magical",
+                        usage: "Worn goggles",
+                        activation: "Passive",
+                        frequency: "Constant",
+                        mechanics: "Improves vision in darkness, often by granting or enhancing darkvision.",
+                        summary: "Very practical for dungeon or night encounters."
+                    },
+                    {
+                        name: "Traveler's Any-Tool",
+                        level: 1,
+                        traits: "Magical, Transmutation",
+                        usage: "Held in 1 hand",
+                        activation: "Interact",
+                        frequency: "At will",
+                        mechanics: "Transforms into many common tools as needed.",
+                        summary: "Versatile utility item for exploration and downtime."
+                    },
+                    {
+                        name: "Wand of Heal",
+                        level: 3,
+                        traits: "Magical, Vitality, Wand",
+                        usage: "Held in 1 hand",
+                        activation: "Cast a Spell",
+                        frequency: "Once per day",
+                        mechanics: "Casts a heal spell each day; strongest in a support-heavy party.",
+                        summary: "Reliable daily healing."
+                    },
+                    {
+                        name: "Wand of Magic Missile",
+                        level: 3,
+                        traits: "Force, Magical, Wand",
+                        usage: "Held in 1 hand",
+                        activation: "Cast a Spell",
+                        frequency: "Once per day",
+                        mechanics: "Casts magic missile each day with reliable force damage.",
+                        summary: "Excellent offensive standby for arcane or occult users."
+                    },
+                    {
+                        name: "Lifting Belt",
+                        level: 4,
+                        traits: "Invested, Magical",
+                        usage: "Worn belt",
+                        activation: "Passive",
+                        frequency: "Constant",
+                        mechanics: "Boosts Athletics-style feats and carrying power.",
+                        summary: "Useful for martials and exploration-heavy groups."
+                    },
+                    {
+                        name: "Pendant of the Occult",
+                        level: 3,
+                        traits: "Invested, Magical, Occult",
+                        usage: "Worn pendant",
+                        activation: "Passive",
+                        frequency: "Constant",
+                        mechanics: "Assists with occult knowledge and related magical interactions.",
+                        summary: "Strong niche support for occult casters."
+                    },
+                    {
+                        name: "Boots of Bounding",
+                        level: 4,
+                        traits: "Invested, Magical",
+                        usage: "Worn boots",
+                        activation: "Passive",
+                        frequency: "Constant",
+                        mechanics: "Improves jumping distance and movement tricks.",
+                        summary: "Great for skirmishers and mobile characters."
+                    },
+                    {
+                        name: "Sturdy Shield (Minor)",
+                        level: 4,
+                        traits: "Magical, Shield",
+                        usage: "Held in 1 hand",
+                        activation: "Raise a Shield / Shield Block",
+                        frequency: "Repeated",
+                        mechanics: "Takes more punishment than a normal shield when blocking.",
+                        summary: "Very good defensive pickup for shield users."
+                    },
+                    {
+                        name: "Handwraps of Mighty Blows +1",
+                        level: 2,
+                        traits: "Magical",
+                        usage: "Worn handwraps",
+                        activation: "Passive",
+                        frequency: "Constant",
+                        mechanics: "Adds potency to unarmed attacks.",
+                        summary: "Core item for monks and unarmed builds."
+                    },
+                    {
+                        name: "Weapon Potency Rune +1",
+                        level: 2,
+                        traits: "Magical, Rune",
+                        usage: "Etched on a weapon",
+                        activation: "Passive",
+                        frequency: "Constant",
+                        mechanics: "Improves attack accuracy with the weapon.",
+                        summary: "Foundational martial upgrade."
+                    },
+                    {
+                        name: "Armor Potency Rune +1",
+                        level: 1,
+                        traits: "Magical, Rune",
+                        usage: "Etched on armor",
+                        activation: "Passive",
+                        frequency: "Constant",
+                        mechanics: "Improves the protective value of armor.",
+                        summary: "One of the most important early armor upgrades."
+                    },
+                    {
+                        name: "Doubling Rings",
+                        level: 3,
+                        traits: "Magical",
+                        usage: "Worn rings",
+                        activation: "Passive",
+                        frequency: "Constant",
+                        mechanics: "Copies runes between paired weapons for easier switching.",
+                        summary: "Excellent for dual-weapon users."
+                    },
+                    {
+                        name: "Everburning Torch",
+                        level: 1,
+                        traits: "Fire, Magical",
+                        usage: "Held in 1 hand",
+                        activation: "Passive",
+                        frequency: "Constant",
+                        mechanics: "Produces permanent magical light.",
+                        summary: "Classic exploration utility."
+                    }
                 ],
                 consumable: [
-                    { name: "Minor Healing Potion", desc: "Restores a small amount of Hit Points." },
-                    { name: "Lesser Antidote", desc: "Temporarily improves resistance to poison." },
-                    { name: "Lesser Antiplague", desc: "Temporarily improves resistance to disease." },
-                    { name: "Scroll of Heal", desc: "Provides a single cast of heal." },
-                    { name: "Scroll of Magic Missile", desc: "Provides a single cast of magic missile." },
-                    { name: "Scroll of Mage Armor", desc: "Provides temporary magical protection." },
-                    { name: "Scroll of Burning Hands", desc: "Unleashes a short cone of fire." },
-                    { name: "Alchemist's Fire (Lesser)", desc: "Deals fire damage and lingering burn." },
-                    { name: "Acid Flask (Lesser)", desc: "Deals acid damage with some splash." },
-                    { name: "Bottled Lightning (Lesser)", desc: "Deals electricity damage and can leave a foe off-balance." },
-                    { name: "Tanglefoot Bag", desc: "Slows a target with sticky resin." },
-                    { name: "Smokestick", desc: "Creates concealing smoke." },
-                    { name: "Sunrod", desc: "Creates bright light for exploration." },
-                    { name: "Elixir of Life (Minor)", desc: "Restores HP and helps against diseases and poisons." },
-                    { name: "Bravo's Brew", desc: "Bolsters confidence and helps against fear." },
-                    { name: "Cheetah's Elixir", desc: "Increases movement speed for a short time." },
-                    { name: "Eagle-Eye Elixir", desc: "Improves long-range visual awareness." },
-                    { name: "Silversheen", desc: "Temporarily gives a weapon a silvered edge." },
-                    { name: "Cold Iron Blanch", desc: "Temporarily gives a weapon cold iron properties." },
-                    { name: "Oil of Potency", desc: "Temporarily empowers a weapon magically." },
-                    { name: "Potion of Leaping", desc: "Improves jumps and athletic movement." },
-                    { name: "Potion of Swimming", desc: "Improves swimming ability." },
-                    { name: "Scroll of Sanctuary", desc: "Helps ward the user against attacks." },
-                    { name: "Ghost Charge", desc: "A bomb especially useful against incorporeal undead." }
+                    {
+                        name: "Minor Healing Potion",
+                        level: 1,
+                        traits: "Consumable, Healing, Magical, Potion, Vitality",
+                        usage: "Held in 1 hand",
+                        activation: "Interact",
+                        frequency: "Single use",
+                        mechanics: "Drink to restore a small amount of Hit Points.",
+                        summary: "Basic emergency healing."
+                    },
+                    {
+                        name: "Lesser Antidote",
+                        level: 1,
+                        traits: "Alchemical, Consumable, Elixir",
+                        usage: "Held in 1 hand",
+                        activation: "Interact",
+                        frequency: "Single use",
+                        mechanics: "Gives a temporary bonus against poison.",
+                        summary: "Useful before or during poison-heavy encounters."
+                    },
+                    {
+                        name: "Lesser Antiplague",
+                        level: 1,
+                        traits: "Alchemical, Consumable, Elixir",
+                        usage: "Held in 1 hand",
+                        activation: "Interact",
+                        frequency: "Single use",
+                        mechanics: "Gives a temporary bonus against disease.",
+                        summary: "Good preventative consumable."
+                    },
+                    {
+                        name: "Scroll of Heal",
+                        level: 1,
+                        traits: "Consumable, Magical, Scroll, Vitality",
+                        usage: "Held in 1 hand",
+                        activation: "Cast a Spell",
+                        frequency: "Single use",
+                        mechanics: "Provides one cast of heal.",
+                        summary: "Flexible healing backup."
+                    },
+                    {
+                        name: "Scroll of Magic Missile",
+                        level: 1,
+                        traits: "Consumable, Force, Magical, Scroll",
+                        usage: "Held in 1 hand",
+                        activation: "Cast a Spell",
+                        frequency: "Single use",
+                        mechanics: "Provides one cast of magic missile.",
+                        summary: "Reliable force damage with no attack roll."
+                    },
+                    {
+                        name: "Scroll of Mage Armor",
+                        level: 1,
+                        traits: "Consumable, Magical, Scroll",
+                        usage: "Held in 1 hand",
+                        activation: "Cast a Spell",
+                        frequency: "Single use",
+                        mechanics: "Provides one cast of mage armor for temporary magical protection.",
+                        summary: "Useful if armor is limited."
+                    },
+                    {
+                        name: "Scroll of Burning Hands",
+                        level: 1,
+                        traits: "Consumable, Fire, Magical, Scroll",
+                        usage: "Held in 1 hand",
+                        activation: "Cast a Spell",
+                        frequency: "Single use",
+                        mechanics: "Unleashes a short cone of fire damage.",
+                        summary: "Good low-level area damage."
+                    },
+                    {
+                        name: "Alchemist's Fire (Lesser)",
+                        level: 1,
+                        traits: "Alchemical, Bomb, Consumable, Fire, Splash",
+                        usage: "Held in 1 hand",
+                        activation: "Strike",
+                        frequency: "Single use",
+                        mechanics: "Deals fire damage plus persistent burn and splash damage.",
+                        summary: "Solid offensive bomb."
+                    },
+                    {
+                        name: "Acid Flask (Lesser)",
+                        level: 1,
+                        traits: "Acid, Alchemical, Bomb, Consumable, Splash",
+                        usage: "Held in 1 hand",
+                        activation: "Strike",
+                        frequency: "Single use",
+                        mechanics: "Deals acid damage with splash damage.",
+                        summary: "Reliable bomb against acid-vulnerable foes."
+                    },
+                    {
+                        name: "Bottled Lightning (Lesser)",
+                        level: 1,
+                        traits: "Alchemical, Bomb, Consumable, Electricity, Splash",
+                        usage: "Held in 1 hand",
+                        activation: "Strike",
+                        frequency: "Single use",
+                        mechanics: "Deals electricity damage and can leave a foe off-guard.",
+                        summary: "Strong support bomb for setting up allies."
+                    },
+                    {
+                        name: "Tanglefoot Bag",
+                        level: 1,
+                        traits: "Alchemical, Bomb, Consumable",
+                        usage: "Held in 1 hand",
+                        activation: "Strike",
+                        frequency: "Single use",
+                        mechanics: "Applies sticky residue that hampers movement.",
+                        summary: "Good battlefield control."
+                    },
+                    {
+                        name: "Smokestick",
+                        level: 1,
+                        traits: "Alchemical, Consumable",
+                        usage: "Held in 1 hand",
+                        activation: "Interact",
+                        frequency: "Single use",
+                        mechanics: "Creates a cloud of concealing smoke.",
+                        summary: "Useful for retreats, stealth, and blocking sight."
+                    },
+                    {
+                        name: "Sunrod",
+                        level: 1,
+                        traits: "Alchemical, Consumable, Light",
+                        usage: "Held in 1 hand",
+                        activation: "Interact",
+                        frequency: "Single use",
+                        mechanics: "Produces bright light for exploration.",
+                        summary: "Cheap and practical dungeon utility."
+                    },
+                    {
+                        name: "Elixir of Life (Minor)",
+                        level: 1,
+                        traits: "Alchemical, Consumable, Elixir, Healing",
+                        usage: "Held in 1 hand",
+                        activation: "Interact",
+                        frequency: "Single use",
+                        mechanics: "Restores HP and provides a small bonus against diseases and poisons.",
+                        summary: "More versatile than a plain healing potion."
+                    },
+                    {
+                        name: "Bravo's Brew",
+                        level: 1,
+                        traits: "Alchemical, Consumable, Elixir",
+                        usage: "Held in 1 hand",
+                        activation: "Interact",
+                        frequency: "Single use",
+                        mechanics: "Bolsters confidence and helps resist fear effects.",
+                        summary: "Handy before a tough fight."
+                    },
+                    {
+                        name: "Cheetah's Elixir",
+                        level: 1,
+                        traits: "Alchemical, Consumable, Elixir",
+                        usage: "Held in 1 hand",
+                        activation: "Interact",
+                        frequency: "Single use",
+                        mechanics: "Temporarily increases movement speed.",
+                        summary: "Excellent mobility boost."
+                    }
                 ]
             },
 
             2: {
                 permanent: [
-                    { name: "Wand of Charm", desc: "Casts charm once per day." },
-                    { name: "Wand of Fear", desc: "Casts fear once per day." },
-                    { name: "Wand of Invisibility", desc: "Provides a daily invisibility spell." },
-                    { name: "Cloak of Repute", desc: "Improves social presence and influence." },
-                    { name: "Bracelet of Dashing", desc: "Enhances movement and agile action." },
-                    { name: "Boots of Elvenkind", desc: "Aid sneaking and quiet movement." },
-                    { name: "Bracers of Missile Deflection", desc: "Help defend against ranged attacks." },
-                    { name: "Lenses of Detection", desc: "Aid in locating hidden creatures or magic." },
-                    { name: "Pendant of the Sea", desc: "Useful for water travel and aquatic survival." },
-                    { name: "Hand of the Mage", desc: "Improves telekinetic manipulation." },
-                    { name: "Sleeves of Storage", desc: "Store small items in magically hidden spaces." },
-                    { name: "Armbands of Athleticism", desc: "Enhance climbing, swimming, and physical feats." },
-                    { name: "Staff of Divination (Minor)", desc: "Supports basic divination magic." },
-                    { name: "Staff of Illusion (Minor)", desc: "Supports illusion-based spellcasting." },
-                    { name: "Staff of Evocation (Minor)", desc: "Supports offensive magical blasts." },
-                    { name: "Retrieval Belt", desc: "Makes it easier to draw and organize gear." },
-                    { name: "Phylactery of Faithfulness", desc: "Warns the wearer before major ethical violations." },
-                    { name: "Wayfinder", desc: "A versatile magical compass with expansion options." },
-                    { name: "Shadow Signet", desc: "Helps redirect certain spells around defenses." },
-                    { name: "Doubling Rings", desc: "Shares weapon runes between two held weapons." },
-                    { name: "Lesser Cloak of the Bat", desc: "Aids stealth and sometimes gliding." },
-                    { name: "Magical Thieves' Tools", desc: "Improves disabling traps and opening locks." }
+                    {
+                        name: "Wand of Charm",
+                        level: 3,
+                        traits: "Emotion, Enchantment, Magical, Mental, Wand",
+                        usage: "Held in 1 hand",
+                        activation: "Cast a Spell",
+                        frequency: "Once per day",
+                        mechanics: "Provides a daily cast of charm.",
+                        summary: "Strong social-control utility."
+                    },
+                    {
+                        name: "Wand of Fear",
+                        level: 3,
+                        traits: "Emotion, Fear, Magical, Mental, Wand",
+                        usage: "Held in 1 hand",
+                        activation: "Cast a Spell",
+                        frequency: "Once per day",
+                        mechanics: "Provides a daily cast of fear.",
+                        summary: "Good offensive debuff tool."
+                    },
+                    {
+                        name: "Wand of Invisibility",
+                        level: 3,
+                        traits: "Illusion, Magical, Wand",
+                        usage: "Held in 1 hand",
+                        activation: "Cast a Spell",
+                        frequency: "Once per day",
+                        mechanics: "Provides a daily cast of invisibility.",
+                        summary: "Excellent for scouting and escape."
+                    },
+                    {
+                        name: "Cloak of Repute",
+                        level: 4,
+                        traits: "Invested, Magical",
+                        usage: "Worn cloak",
+                        activation: "Passive",
+                        frequency: "Constant",
+                        mechanics: "Improves social presence and influence.",
+                        summary: "Best for face characters."
+                    },
+                    {
+                        name: "Bracelet of Dashing",
+                        level: 3,
+                        traits: "Invested, Magical",
+                        usage: "Worn bracelet",
+                        activation: "Passive",
+                        frequency: "Constant",
+                        mechanics: "Enhances movement and nimble action.",
+                        summary: "Useful for mobile builds."
+                    },
+                    {
+                        name: "Boots of Elvenkind",
+                        level: 4,
+                        traits: "Invested, Magical",
+                        usage: "Worn boots",
+                        activation: "Passive",
+                        frequency: "Constant",
+                        mechanics: "Aid quiet movement and sneaking.",
+                        summary: "Stealth staple."
+                    },
+                    {
+                        name: "Bracers of Missile Deflection",
+                        level: 4,
+                        traits: "Invested, Magical",
+                        usage: "Worn bracers",
+                        activation: "Reaction or passive defense",
+                        frequency: "Limited by trigger",
+                        mechanics: "Improve protection against ranged attacks.",
+                        summary: "Good defense against archers and thrown weapons."
+                    },
+                    {
+                        name: "Lenses of Detection",
+                        level: 4,
+                        traits: "Invested, Magical",
+                        usage: "Worn eyewear",
+                        activation: "Passive",
+                        frequency: "Constant",
+                        mechanics: "Aid in spotting hidden creatures, clues, or magical details.",
+                        summary: "Great investigative utility."
+                    },
+                    {
+                        name: "Sleeves of Storage",
+                        level: 4,
+                        traits: "Invested, Magical",
+                        usage: "Worn sleeves",
+                        activation: "Interact",
+                        frequency: "Repeated",
+                        mechanics: "Store and retrieve small items from concealed extradimensional spaces.",
+                        summary: "Great convenience item."
+                    },
+                    {
+                        name: "Armbands of Athleticism",
+                        level: 5,
+                        traits: "Invested, Magical",
+                        usage: "Worn armbands",
+                        activation: "Passive",
+                        frequency: "Constant",
+                        mechanics: "Improve climbing, swimming, and similar physical feats.",
+                        summary: "Excellent exploration item."
+                    },
+                    {
+                        name: "Staff of Divination (Minor)",
+                        level: 3,
+                        traits: "Magical, Staff",
+                        usage: "Held in 1 hand",
+                        activation: "Cast a Spell",
+                        frequency: "Uses charges",
+                        mechanics: "Provides divination-themed spell access and staff charging utility.",
+                        summary: "Useful scouting and information staff."
+                    },
+                    {
+                        name: "Staff of Illusion (Minor)",
+                        level: 3,
+                        traits: "Illusion, Magical, Staff",
+                        usage: "Held in 1 hand",
+                        activation: "Cast a Spell",
+                        frequency: "Uses charges",
+                        mechanics: "Provides illusion spell access through a staff.",
+                        summary: "Best for trickery and infiltration."
+                    },
+                    {
+                        name: "Staff of Evocation (Minor)",
+                        level: 3,
+                        traits: "Evocation, Magical, Staff",
+                        usage: "Held in 1 hand",
+                        activation: "Cast a Spell",
+                        frequency: "Uses charges",
+                        mechanics: "Provides offensive blasting spells through a staff.",
+                        summary: "Excellent general-purpose caster weapon."
+                    },
+                    {
+                        name: "Retrieval Belt",
+                        level: 4,
+                        traits: "Invested, Magical",
+                        usage: "Worn belt",
+                        activation: "Interact",
+                        frequency: "Repeated",
+                        mechanics: "Makes drawing and organizing useful gear easier.",
+                        summary: "Strong action-economy helper."
+                    },
+                    {
+                        name: "Phylactery of Faithfulness",
+                        level: 1,
+                        traits: "Divine, Invested, Magical",
+                        usage: "Worn",
+                        activation: "Passive",
+                        frequency: "Constant",
+                        mechanics: "Warns the wearer before a severe ethical or religious transgression.",
+                        summary: "Ideal for devoted champions and clerics."
+                    },
+                    {
+                        name: "Wayfinder",
+                        level: 2,
+                        traits: "Magical",
+                        usage: "Held or worn",
+                        activation: "Varies by attachment",
+                        frequency: "Varies",
+                        mechanics: "Acts as a magical compass and anchor for aeon stones or upgrades.",
+                        summary: "Versatile and expandable utility item."
+                    }
                 ],
                 consumable: [
-                    { name: "Lesser Healing Potion", desc: "Restores a moderate amount of HP." },
-                    { name: "Elixir of Life (Lesser)", desc: "Restores HP and offers a modest medical boost." },
-                    { name: "Scroll of Invisibility", desc: "Turns a creature invisible for a short time." },
-                    { name: "Scroll of Disguise Self", desc: "Alters appearance with illusion magic." },
-                    { name: "Scroll of Mirror Image", desc: "Creates decoys that make attacks less likely to hit." },
-                    { name: "Scroll of Restoration", desc: "Helps remove some harmful conditions." },
-                    { name: "Scroll of Resist Energy", desc: "Grants temporary resistance to one energy type." },
-                    { name: "Scroll of Darkvision", desc: "Improves vision in darkness." },
-                    { name: "Invisibility Potion", desc: "Provides a short burst of invisibility." },
-                    { name: "Darkvision Elixir", desc: "Temporarily grants darkvision." },
-                    { name: "Mistform Elixir", desc: "Makes the drinker harder to hit." },
-                    { name: "Stone Fist Elixir", desc: "Strengthens unarmed strikes." },
-                    { name: "Drakeheart Mutagen", desc: "Improves defense but reduces magical flexibility." },
-                    { name: "Quicksilver Mutagen", desc: "Boosts speed and precision at the cost of toughness." },
-                    { name: "Juggernaut Mutagen", desc: "Increases durability and fortitude." },
-                    { name: "Bottled Lightning (Moderate)", desc: "A stronger lightning bomb with useful debuff potential." },
-                    { name: "Acid Flask (Moderate)", desc: "A stronger acid bomb with splash damage." },
-                    { name: "Alchemist's Fire (Moderate)", desc: "A stronger fire bomb with persistent burn." },
-                    { name: "Scroll of Web", desc: "Creates restraining magical webs." },
-                    { name: "Scroll of Glitterdust", desc: "Reveals hidden creatures and hampers vision." }
+                    {
+                        name: "Lesser Healing Potion",
+                        level: 3,
+                        traits: "Consumable, Healing, Magical, Potion, Vitality",
+                        usage: "Held in 1 hand",
+                        activation: "Interact",
+                        frequency: "Single use",
+                        mechanics: "Restores a moderate amount of HP.",
+                        summary: "A very common treasure staple."
+                    },
+                    {
+                        name: "Elixir of Life (Lesser)",
+                        level: 3,
+                        traits: "Alchemical, Consumable, Elixir, Healing",
+                        usage: "Held in 1 hand",
+                        activation: "Interact",
+                        frequency: "Single use",
+                        mechanics: "Restores HP and gives a modest anti-affliction benefit.",
+                        summary: "Slightly more versatile than a potion."
+                    },
+                    {
+                        name: "Scroll of Invisibility",
+                        level: 2,
+                        traits: "Consumable, Illusion, Magical, Scroll",
+                        usage: "Held in 1 hand",
+                        activation: "Cast a Spell",
+                        frequency: "Single use",
+                        mechanics: "Turns a creature invisible for a short time.",
+                        summary: "Excellent scouting and escape tool."
+                    },
+                    {
+                        name: "Scroll of Disguise Self",
+                        level: 1,
+                        traits: "Consumable, Illusion, Magical, Scroll",
+                        usage: "Held in 1 hand",
+                        activation: "Cast a Spell",
+                        frequency: "Single use",
+                        mechanics: "Creates a magical disguise.",
+                        summary: "Good for intrigue-heavy play."
+                    },
+                    {
+                        name: "Scroll of Mirror Image",
+                        level: 2,
+                        traits: "Consumable, Illusion, Magical, Scroll",
+                        usage: "Held in 1 hand",
+                        activation: "Cast a Spell",
+                        frequency: "Single use",
+                        mechanics: "Creates illusionary duplicates that can absorb attacks.",
+                        summary: "Strong defensive scroll."
+                    },
+                    {
+                        name: "Scroll of Restoration",
+                        level: 2,
+                        traits: "Consumable, Healing, Magical, Necromancy, Scroll",
+                        usage: "Held in 1 hand",
+                        activation: "Cast a Spell",
+                        frequency: "Single use",
+                        mechanics: "Removes certain conditions or penalties.",
+                        summary: "Very useful recovery tool."
+                    },
+                    {
+                        name: "Scroll of Resist Energy",
+                        level: 2,
+                        traits: "Abjuration, Consumable, Magical, Scroll",
+                        usage: "Held in 1 hand",
+                        activation: "Cast a Spell",
+                        frequency: "Single use",
+                        mechanics: "Grants temporary resistance to one energy type.",
+                        summary: "Great before a known elemental threat."
+                    },
+                    {
+                        name: "Scroll of Darkvision",
+                        level: 2,
+                        traits: "Consumable, Divine, Magical, Scroll",
+                        usage: "Held in 1 hand",
+                        activation: "Cast a Spell",
+                        frequency: "Single use",
+                        mechanics: "Improves a target’s ability to see in darkness.",
+                        summary: "Very practical in dungeons."
+                    },
+                    {
+                        name: "Invisibility Potion",
+                        level: 4,
+                        traits: "Consumable, Illusion, Magical, Potion",
+                        usage: "Held in 1 hand",
+                        activation: "Interact",
+                        frequency: "Single use",
+                        mechanics: "Provides temporary invisibility.",
+                        summary: "Quick escape or setup item."
+                    },
+                    {
+                        name: "Darkvision Elixir",
+                        level: 2,
+                        traits: "Alchemical, Consumable, Elixir",
+                        usage: "Held in 1 hand",
+                        activation: "Interact",
+                        frequency: "Single use",
+                        mechanics: "Temporarily grants darkvision.",
+                        summary: "Very useful utility consumable."
+                    },
+                    {
+                        name: "Mistform Elixir",
+                        level: 4,
+                        traits: "Alchemical, Consumable, Elixir",
+                        usage: "Held in 1 hand",
+                        activation: "Interact",
+                        frequency: "Single use",
+                        mechanics: "Makes the drinker harder to hit for a time.",
+                        summary: "A good defensive pre-fight item."
+                    },
+                    {
+                        name: "Stone Fist Elixir",
+                        level: 4,
+                        traits: "Alchemical, Consumable, Elixir",
+                        usage: "Held in 1 hand",
+                        activation: "Interact",
+                        frequency: "Single use",
+                        mechanics: "Improves unarmed attacks for a short duration.",
+                        summary: "Best on monks and brawlers."
+                    }
                 ]
             },
 
             3: {
                 permanent: [
-                    { name: "+1 Striking Weapon", desc: "Improves accuracy and increases weapon damage dice." },
-                    { name: "+1 Resilient Armor", desc: "Improves defenses and saving throws." },
-                    { name: "Staff of Fire (Minor)", desc: "Supports fire-based spellcasting." },
-                    { name: "Staff of Healing (Minor)", desc: "Supports restorative magic." },
-                    { name: "Wand of Fireball", desc: "Casts fireball once per day." },
-                    { name: "Wand of Lightning Bolt", desc: "Casts lightning bolt once per day." },
-                    { name: "Wand of Haste", desc: "Speeds an ally once per day." },
-                    { name: "Wand of Slow", desc: "Hinders an enemy’s actions once per day." },
-                    { name: "Belt of Good Health", desc: "Improves bodily resilience." },
-                    { name: "Cloak of the Bat", desc: "Enhances stealth and mobility in darkness." },
-                    { name: "Horn of Blasting (Lesser)", desc: "Emits a powerful destructive sound." },
-                    { name: "Spiderfoot Boots", desc: "Aid in climbing and moving across difficult surfaces." },
-                    { name: "Gloves of Storing", desc: "Let the wearer stash and retrieve a held item magically." },
-                    { name: "Bag of Holding (Type II)", desc: "A larger extradimensional storage space." },
-                    { name: "Ring of Minor Arcana", desc: "Offers a small magical benefit tied to spellcasting." },
-                    { name: "Chime of Opening", desc: "Opens locks or sealed portals magically." },
-                    { name: "Winged Sandals", desc: "Improve mobility and briefly aid aerial movement." },
-                    { name: "Jade Bauble", desc: "A protective magical charm." },
-                    { name: "Wand of Dispel Magic", desc: "Counters magical effects once per day." },
-                    { name: "Staff of Divination (Greater Minor)", desc: "Improves the utility of divination spells." }
+                    {
+                        name: "+1 Striking Weapon",
+                        level: 4,
+                        traits: "Magical, Rune",
+                        usage: "Etched on a weapon",
+                        activation: "Passive",
+                        frequency: "Constant",
+                        mechanics: "Improves accuracy and increases weapon damage dice.",
+                        summary: "Core martial progression item."
+                    },
+                    {
+                        name: "+1 Resilient Armor",
+                        level: 4,
+                        traits: "Magical, Rune",
+                        usage: "Etched on armor",
+                        activation: "Passive",
+                        frequency: "Constant",
+                        mechanics: "Improves defenses and saving throws.",
+                        summary: "A very strong defensive upgrade."
+                    },
+                    {
+                        name: "Staff of Fire (Minor)",
+                        level: 4,
+                        traits: "Fire, Magical, Staff",
+                        usage: "Held in 1 hand",
+                        activation: "Cast a Spell",
+                        frequency: "Uses charges",
+                        mechanics: "Supports fire spellcasting and stores staff charges.",
+                        summary: "Great for offensive casters."
+                    },
+                    {
+                        name: "Staff of Healing (Minor)",
+                        level: 4,
+                        traits: "Healing, Magical, Staff, Vitality",
+                        usage: "Held in 1 hand",
+                        activation: "Cast a Spell",
+                        frequency: "Uses charges",
+                        mechanics: "Supports restorative casting and improves healing efficiency.",
+                        summary: "Excellent for primary healers."
+                    },
+                    {
+                        name: "Wand of Fireball",
+                        level: 5,
+                        traits: "Fire, Magical, Wand",
+                        usage: "Held in 1 hand",
+                        activation: "Cast a Spell",
+                        frequency: "Once per day",
+                        mechanics: "Provides a daily fireball.",
+                        summary: "Classic AoE damage item."
+                    },
+                    {
+                        name: "Wand of Lightning Bolt",
+                        level: 5,
+                        traits: "Electricity, Magical, Wand",
+                        usage: "Held in 1 hand",
+                        activation: "Cast a Spell",
+                        frequency: "Once per day",
+                        mechanics: "Provides a daily lightning bolt.",
+                        summary: "Strong line-based area damage."
+                    },
+                    {
+                        name: "Wand of Haste",
+                        level: 5,
+                        traits: "Magical, Transmutation, Wand",
+                        usage: "Held in 1 hand",
+                        activation: "Cast a Spell",
+                        frequency: "Once per day",
+                        mechanics: "Provides a daily haste spell.",
+                        summary: "Excellent action-economy enhancer."
+                    },
+                    {
+                        name: "Wand of Slow",
+                        level: 5,
+                        traits: "Magical, Transmutation, Wand",
+                        usage: "Held in 1 hand",
+                        activation: "Cast a Spell",
+                        frequency: "Once per day",
+                        mechanics: "Provides a daily slow spell.",
+                        summary: "Excellent boss-control wand."
+                    },
+                    {
+                        name: "Belt of Good Health",
+                        level: 6,
+                        traits: "Invested, Magical",
+                        usage: "Worn belt",
+                        activation: "Passive",
+                        frequency: "Constant",
+                        mechanics: "Improves bodily resilience and survivability.",
+                        summary: "Strong defensive utility."
+                    },
+                    {
+                        name: "Cloak of the Bat",
+                        level: 7,
+                        traits: "Invested, Magical",
+                        usage: "Worn cloak",
+                        activation: "Passive / activated movement",
+                        frequency: "Varies",
+                        mechanics: "Enhances stealth and grants dark mobility benefits.",
+                        summary: "Very flavorful scout item."
+                    },
+                    {
+                        name: "Spiderfoot Boots",
+                        level: 4,
+                        traits: "Invested, Magical",
+                        usage: "Worn boots",
+                        activation: "Passive",
+                        frequency: "Constant",
+                        mechanics: "Help with climbing and unusual movement surfaces.",
+                        summary: "Great exploration tool."
+                    },
+                    {
+                        name: "Gloves of Storing",
+                        level: 7,
+                        traits: "Invested, Magical",
+                        usage: "Worn gloves",
+                        activation: "Interact",
+                        frequency: "Repeated",
+                        mechanics: "Store and recall a held item quickly.",
+                        summary: "Excellent convenience and action-economy item."
+                    }
                 ],
                 consumable: [
-                    { name: "Moderate Healing Potion", desc: "Restores a healthy amount of HP." },
-                    { name: "Greater Elixir of Life", desc: "Restores HP and gives stronger medical support." },
-                    { name: "Scroll of Fireball", desc: "A single cast of fireball." },
-                    { name: "Scroll of Haste", desc: "A single cast of haste." },
-                    { name: "Scroll of Slow", desc: "A single cast of slow." },
-                    { name: "Scroll of Fly", desc: "Lets a creature fly temporarily." },
-                    { name: "Scroll of Water Breathing", desc: "Lets creatures breathe underwater." },
-                    { name: "Scroll of Dispel Magic", desc: "Counters active spells or magical effects." },
-                    { name: "Potion of Flying", desc: "Grants temporary flight." },
-                    { name: "Potion of Water Breathing", desc: "Allows breathing underwater for a time." },
-                    { name: "Potion of Quickness", desc: "Temporarily increases speed and tempo." },
-                    { name: "Scroll of Clairaudience", desc: "Allows remote magical observation." },
-                    { name: "Scroll of Heroism", desc: "Temporarily boosts courage and capability." },
-                    { name: "Scroll of Vampiric Touch", desc: "Deals damage and steals vitality." },
-                    { name: "Ghost Oil", desc: "Helps a weapon affect incorporeal creatures." },
-                    { name: "Silversheen (Greater)", desc: "Temporarily grants stronger silver utility." },
-                    { name: "Cold Iron Blanch (Greater)", desc: "Temporarily grants stronger cold iron utility." },
-                    { name: "Drakeheart Mutagen (Greater)", desc: "A stronger version with better defensive payoff." },
-                    { name: "Quicksilver Mutagen (Greater)", desc: "A stronger speed-and-precision mutagen." },
-                    { name: "Juggernaut Mutagen (Greater)", desc: "A stronger toughness-focused mutagen." }
+                    {
+                        name: "Moderate Healing Potion",
+                        level: 5,
+                        traits: "Consumable, Healing, Magical, Potion, Vitality",
+                        usage: "Held in 1 hand",
+                        activation: "Interact",
+                        frequency: "Single use",
+                        mechanics: "Restores a healthy amount of HP.",
+                        summary: "A strong mid-tier healing staple."
+                    },
+                    {
+                        name: "Greater Elixir of Life",
+                        level: 5,
+                        traits: "Alchemical, Consumable, Elixir, Healing",
+                        usage: "Held in 1 hand",
+                        activation: "Interact",
+                        frequency: "Single use",
+                        mechanics: "Restores HP and provides stronger anti-affliction support.",
+                        summary: "Excellent support consumable."
+                    },
+                    {
+                        name: "Scroll of Fireball",
+                        level: 5,
+                        traits: "Consumable, Fire, Magical, Scroll",
+                        usage: "Held in 1 hand",
+                        activation: "Cast a Spell",
+                        frequency: "Single use",
+                        mechanics: "One cast of fireball.",
+                        summary: "High-value area-damage scroll."
+                    },
+                    {
+                        name: "Scroll of Haste",
+                        level: 5,
+                        traits: "Consumable, Magical, Scroll, Transmutation",
+                        usage: "Held in 1 hand",
+                        activation: "Cast a Spell",
+                        frequency: "Single use",
+                        mechanics: "One cast of haste.",
+                        summary: "One of the best buff scrolls."
+                    },
+                    {
+                        name: "Scroll of Slow",
+                        level: 5,
+                        traits: "Consumable, Magical, Scroll, Transmutation",
+                        usage: "Held in 1 hand",
+                        activation: "Cast a Spell",
+                        frequency: "Single use",
+                        mechanics: "One cast of slow.",
+                        summary: "Excellent debuff for tough enemies."
+                    },
+                    {
+                        name: "Scroll of Fly",
+                        level: 4,
+                        traits: "Consumable, Magical, Scroll, Transmutation",
+                        usage: "Held in 1 hand",
+                        activation: "Cast a Spell",
+                        frequency: "Single use",
+                        mechanics: "Temporarily grants flight.",
+                        summary: "Powerful traversal and combat utility."
+                    },
+                    {
+                        name: "Scroll of Water Breathing",
+                        level: 5,
+                        traits: "Consumable, Magical, Scroll, Transmutation",
+                        usage: "Held in 1 hand",
+                        activation: "Cast a Spell",
+                        frequency: "Single use",
+                        mechanics: "Lets creatures breathe underwater.",
+                        summary: "Very useful scenario scroll."
+                    },
+                    {
+                        name: "Potion of Flying",
+                        level: 8,
+                        traits: "Consumable, Magical, Potion, Transmutation",
+                        usage: "Held in 1 hand",
+                        activation: "Interact",
+                        frequency: "Single use",
+                        mechanics: "Grants temporary flight.",
+                        summary: "Top-tier movement consumable."
+                    },
+                    {
+                        name: "Potion of Water Breathing",
+                        level: 6,
+                        traits: "Consumable, Magical, Potion, Transmutation",
+                        usage: "Held in 1 hand",
+                        activation: "Interact",
+                        frequency: "Single use",
+                        mechanics: "Allows breathing underwater for a time.",
+                        summary: "Strong environment prep."
+                    },
+                    {
+                        name: "Potion of Quickness",
+                        level: 8,
+                        traits: "Consumable, Magical, Potion, Transmutation",
+                        usage: "Held in 1 hand",
+                        activation: "Interact",
+                        frequency: "Single use",
+                        mechanics: "Temporarily increases speed and combat tempo.",
+                        summary: "Very strong short-term buff."
+                    }
                 ]
             },
 
             4: {
                 permanent: [
-                    { name: "+2 Weapon Potency Rune", desc: "Further improves a weapon’s accuracy." },
-                    { name: "+2 Armor Potency Rune", desc: "Further improves armor protection." },
-                    { name: "Greater Staff of Fire", desc: "A stronger staff for fire spellcasters." },
-                    { name: "Greater Staff of Healing", desc: "A stronger staff for healing magic." },
-                    { name: "Ring of Wizardry", desc: "Expands magical casting potential." },
-                    { name: "Boots of Speed", desc: "Substantially improve battlefield mobility." },
-                    { name: "Cape of the Mountebank", desc: "Supports flashy magical repositioning." },
-                    { name: "Bracers of Armor", desc: "Provide magical defense without conventional armor." },
-                    { name: "Lion Cloak", desc: "Supports intimidation and dramatic presence." },
-                    { name: "Eyes of the Eagle", desc: "Improve precision sight and perception." },
-                    { name: "Horn of Fog", desc: "Creates obscuring fog on command." },
-                    { name: "Staff of Illusion (Greater Minor)", desc: "Improves access to illusion magic." },
-                    { name: "Staff of Necromancy (Minor)", desc: "Supports necromantic spellcasting." },
-                    { name: "Amulet of Mighty Fists", desc: "Empowers unarmed or natural attacks." },
-                    { name: "Handwraps of Mighty Blows +2", desc: "Further enhances unarmed attacks." },
-                    { name: "Wand of Cone of Cold", desc: "Releases a blast of freezing magic daily." },
-                    { name: "Wand of Dimension Door", desc: "Allows short-range teleportation once per day." },
-                    { name: "Spellguard Shield", desc: "Helps defend against magic." },
-                    { name: "Aegis of Arnisant", desc: "A defensive item with layered protection." },
-                    { name: "Energy-Resistant Armor Rune", desc: "Adds protection against elemental damage." }
+                    {
+                        name: "+2 Weapon Potency Rune",
+                        level: 10,
+                        traits: "Magical, Rune",
+                        usage: "Etched on a weapon",
+                        activation: "Passive",
+                        frequency: "Constant",
+                        mechanics: "Further improves weapon accuracy.",
+                        summary: "Key upgrade for martials."
+                    },
+                    {
+                        name: "+2 Armor Potency Rune",
+                        level: 9,
+                        traits: "Magical, Rune",
+                        usage: "Etched on armor",
+                        activation: "Passive",
+                        frequency: "Constant",
+                        mechanics: "Further improves armor protection.",
+                        summary: "Important AC progression item."
+                    },
+                    {
+                        name: "Greater Staff of Fire",
+                        level: 8,
+                        traits: "Fire, Magical, Staff",
+                        usage: "Held in 1 hand",
+                        activation: "Cast a Spell",
+                        frequency: "Uses charges",
+                        mechanics: "A stronger staff for fire spellcasting.",
+                        summary: "Excellent blaster staff."
+                    },
+                    {
+                        name: "Greater Staff of Healing",
+                        level: 8,
+                        traits: "Healing, Magical, Staff, Vitality",
+                        usage: "Held in 1 hand",
+                        activation: "Cast a Spell",
+                        frequency: "Uses charges",
+                        mechanics: "A stronger healing staff with broader restorative use.",
+                        summary: "Very efficient for support casters."
+                    },
+                    {
+                        name: "Ring of Wizardry",
+                        level: 7,
+                        traits: "Arcane, Invested, Magical",
+                        usage: "Worn ring",
+                        activation: "Passive",
+                        frequency: "Constant",
+                        mechanics: "Expands magical spellcasting capacity or flexibility.",
+                        summary: "Strong for prepared arcane casters."
+                    },
+                    {
+                        name: "Boots of Speed",
+                        level: 11,
+                        traits: "Invested, Magical",
+                        usage: "Worn boots",
+                        activation: "Command",
+                        frequency: "Limited duration",
+                        mechanics: "Substantially improve movement and combat tempo.",
+                        summary: "Excellent mobility item."
+                    },
+                    {
+                        name: "Cape of the Mountebank",
+                        level: 10,
+                        traits: "Conjuration, Invested, Magical",
+                        usage: "Worn cloak",
+                        activation: "Command",
+                        frequency: "Limited use",
+                        mechanics: "Supports dramatic short-range repositioning or escape.",
+                        summary: "Excellent utility and panic button."
+                    },
+                    {
+                        name: "Lion Cloak",
+                        level: 7,
+                        traits: "Invested, Magical",
+                        usage: "Worn cloak",
+                        activation: "Passive",
+                        frequency: "Constant",
+                        mechanics: "Supports intimidation and dramatic presence.",
+                        summary: "Great on charisma-heavy martials."
+                    },
+                    {
+                        name: "Eyes of the Eagle",
+                        level: 9,
+                        traits: "Invested, Magical",
+                        usage: "Worn eyewear",
+                        activation: "Passive",
+                        frequency: "Constant",
+                        mechanics: "Improve visual perception and range spotting.",
+                        summary: "A powerful scout item."
+                    },
+                    {
+                        name: "Wand of Dimension Door",
+                        level: 7,
+                        traits: "Conjuration, Magical, Wand",
+                        usage: "Held in 1 hand",
+                        activation: "Cast a Spell",
+                        frequency: "Once per day",
+                        mechanics: "Allows short-range teleportation once per day.",
+                        summary: "Excellent repositioning tool."
+                    },
+                    {
+                        name: "Spellguard Shield",
+                        level: 6,
+                        traits: "Magical, Shield",
+                        usage: "Held in 1 hand",
+                        activation: "Raise a Shield / special defense",
+                        frequency: "Repeated",
+                        mechanics: "Helps protect against magical attacks.",
+                        summary: "Great anti-caster defense."
+                    }
                 ],
                 consumable: [
-                    { name: "Greater Healing Potion", desc: "Restores a large amount of HP." },
-                    { name: "Scroll of Dimension Door", desc: "A one-use short-range teleport." },
-                    { name: "Scroll of Stoneskin", desc: "Improves durability against physical harm." },
-                    { name: "Scroll of Wall of Fire", desc: "Creates a barrier of flame." },
-                    { name: "Scroll of Cone of Cold", desc: "Deals cold damage in a broad area." },
-                    { name: "Scroll of Remove Curse", desc: "Helps lift magical curses." },
-                    { name: "Scroll of Restoration", desc: "Removes certain debilitating conditions." },
-                    { name: "Oil of Sharpness", desc: "Briefly makes a weapon cut more effectively." },
-                    { name: "Potion of Invisibility (Greater)", desc: "Longer or more reliable invisibility effect." },
-                    { name: "Potion of Flying (Greater)", desc: "Longer-lasting flight." },
-                    { name: "Potion of Quickness (Greater)", desc: "Longer or stronger speed benefit." },
-                    { name: "Elixir of Life (Major)", desc: "A stronger restorative alchemical draught." },
-                    { name: "Scroll of True Seeing", desc: "Temporarily pierces illusion and deception." },
-                    { name: "Scroll of Freedom of Movement", desc: "Helps ignore restraints and impediments." },
-                    { name: "Scroll of Heroism (Greater)", desc: "A stronger morale and performance boost." },
-                    { name: "Scroll of Black Tentacles", desc: "Creates restraining magical tendrils." },
-                    { name: "Dust of Appearance", desc: "Reveals hidden creatures in an area." },
-                    { name: "Dust of Disappearance", desc: "Turns creatures invisible for a time." },
-                    { name: "Oil of Weightlessness", desc: "Makes objects much easier to carry." },
-                    { name: "Phoenix Flask", desc: "A potent fire-based offensive consumable." }
+                    {
+                        name: "Greater Healing Potion",
+                        level: 8,
+                        traits: "Consumable, Healing, Magical, Potion, Vitality",
+                        usage: "Held in 1 hand",
+                        activation: "Interact",
+                        frequency: "Single use",
+                        mechanics: "Restores a large amount of HP.",
+                        summary: "Excellent emergency healing."
+                    },
+                    {
+                        name: "Scroll of Dimension Door",
+                        level: 4,
+                        traits: "Conjuration, Consumable, Magical, Scroll",
+                        usage: "Held in 1 hand",
+                        activation: "Cast a Spell",
+                        frequency: "Single use",
+                        mechanics: "One-use short-range teleport.",
+                        summary: "Very useful escape or infiltration option."
+                    },
+                    {
+                        name: "Scroll of Stoneskin",
+                        level: 4,
+                        traits: "Abjuration, Consumable, Magical, Scroll",
+                        usage: "Held in 1 hand",
+                        activation: "Cast a Spell",
+                        frequency: "Single use",
+                        mechanics: "Improves toughness against physical harm.",
+                        summary: "Excellent pre-fight protection."
+                    },
+                    {
+                        name: "Scroll of Wall of Fire",
+                        level: 4,
+                        traits: "Consumable, Fire, Magical, Scroll",
+                        usage: "Held in 1 hand",
+                        activation: "Cast a Spell",
+                        frequency: "Single use",
+                        mechanics: "Creates a damaging barrier of flame.",
+                        summary: "Strong zone control."
+                    },
+                    {
+                        name: "Scroll of Cone of Cold",
+                        level: 5,
+                        traits: "Cold, Consumable, Magical, Scroll",
+                        usage: "Held in 1 hand",
+                        activation: "Cast a Spell",
+                        frequency: "Single use",
+                        mechanics: "Deals heavy cold damage in a broad area.",
+                        summary: "Strong burst damage."
+                    },
+                    {
+                        name: "Scroll of Remove Curse",
+                        level: 4,
+                        traits: "Consumable, Curse, Magical, Scroll",
+                        usage: "Held in 1 hand",
+                        activation: "Cast a Spell",
+                        frequency: "Single use",
+                        mechanics: "Lifts or suppresses magical curses.",
+                        summary: "Excellent utility scroll."
+                    },
+                    {
+                        name: "Potion of Invisibility (Greater)",
+                        level: 8,
+                        traits: "Consumable, Illusion, Magical, Potion",
+                        usage: "Held in 1 hand",
+                        activation: "Interact",
+                        frequency: "Single use",
+                        mechanics: "Provides a stronger or longer invisibility effect.",
+                        summary: "Very useful for scouting or setup."
+                    },
+                    {
+                        name: "Potion of Flying (Greater)",
+                        level: 10,
+                        traits: "Consumable, Magical, Potion, Transmutation",
+                        usage: "Held in 1 hand",
+                        activation: "Interact",
+                        frequency: "Single use",
+                        mechanics: "Longer-lasting flight.",
+                        summary: "Excellent tactical mobility."
+                    },
+                    {
+                        name: "Elixir of Life (Major)",
+                        level: 9,
+                        traits: "Alchemical, Consumable, Elixir, Healing",
+                        usage: "Held in 1 hand",
+                        activation: "Interact",
+                        frequency: "Single use",
+                        mechanics: "A stronger restorative draught with better healing output.",
+                        summary: "High-value alchemical healing."
+                    }
                 ]
             },
 
             5: {
                 permanent: [
-                    { name: "+2 Striking Weapon", desc: "A major upgrade to both accuracy and weapon damage." },
-                    { name: "+2 Resilient Armor", desc: "A strong defensive armor upgrade." },
-                    { name: "Major Staff of Fire", desc: "Strong support for an offensive fire caster." },
-                    { name: "Major Staff of Healing", desc: "Strong support for a healing caster." },
-                    { name: "Staff of Divination (Major)", desc: "Enhances magical scouting and foresight." },
-                    { name: "Staff of Abjuration (Major)", desc: "Supports defensive and protective magic." },
-                    { name: "Ring of Energy Resistance", desc: "Provides protection against one energy type." },
-                    { name: "Ring of the Ram", desc: "Unleashes forceful magical impacts." },
-                    { name: "Belt of Giant Strength", desc: "Boosts physical power significantly." },
-                    { name: "Headband of Inspired Wisdom", desc: "Supports insight and willpower." },
-                    { name: "Cloak of Resistance", desc: "Improves survivability against many threats." },
-                    { name: "Shadow Signet (Greater)", desc: "Improves spell delivery against defended targets." },
-                    { name: "Wand of Chain Lightning", desc: "Casts chain lightning once per day." },
-                    { name: "Wand of Teleport", desc: "Provides powerful travel magic once per day." },
-                    { name: "Wand of Wall of Stone", desc: "Creates solid barriers once per day." },
-                    { name: "Armor Property Rune (Fortification)", desc: "Helps turn deadly hits into normal ones." },
-                    { name: "Weapon Property Rune (Flaming)", desc: "Adds persistent fiery offense to attacks." },
-                    { name: "Weapon Property Rune (Shock)", desc: "Adds electrical energy to attacks." },
-                    { name: "Weapon Property Rune (Frost)", desc: "Adds cold energy to attacks." },
-                    { name: "Brilliant Rapier", desc: "A magic weapon effective against darkness-themed foes." },
-                    { name: "Demon Mask", desc: "Enhances intimidation and menace." },
-                    { name: "Ring of Sustenance", desc: "Reduces the need for food and rest." }
+                    {
+                        name: "+2 Striking Weapon",
+                        level: 12,
+                        traits: "Magical, Rune",
+                        usage: "Etched on a weapon",
+                        activation: "Passive",
+                        frequency: "Constant",
+                        mechanics: "Major upgrade to accuracy and weapon damage output.",
+                        summary: "Big martial power spike."
+                    },
+                    {
+                        name: "+2 Resilient Armor",
+                        level: 11,
+                        traits: "Magical, Rune",
+                        usage: "Etched on armor",
+                        activation: "Passive",
+                        frequency: "Constant",
+                        mechanics: "A strong armor upgrade improving both AC and saving throws.",
+                        summary: "Excellent defensive progression."
+                    },
+                    {
+                        name: "Major Staff of Fire",
+                        level: 12,
+                        traits: "Fire, Magical, Staff",
+                        usage: "Held in 1 hand",
+                        activation: "Cast a Spell",
+                        frequency: "Uses charges",
+                        mechanics: "Powerful support for offensive fire spellcasting.",
+                        summary: "Very strong blaster staff."
+                    },
+                    {
+                        name: "Major Staff of Healing",
+                        level: 12,
+                        traits: "Healing, Magical, Staff, Vitality",
+                        usage: "Held in 1 hand",
+                        activation: "Cast a Spell",
+                        frequency: "Uses charges",
+                        mechanics: "Strong support for healing and restoration.",
+                        summary: "Top-tier support item."
+                    },
+                    {
+                        name: "Ring of Energy Resistance",
+                        level: 10,
+                        traits: "Invested, Magical",
+                        usage: "Worn ring",
+                        activation: "Passive",
+                        frequency: "Constant",
+                        mechanics: "Provides ongoing protection against one energy type.",
+                        summary: "Great defensive specialist item."
+                    },
+                    {
+                        name: "Ring of the Ram",
+                        level: 6,
+                        traits: "Force, Invested, Magical",
+                        usage: "Worn ring",
+                        activation: "Command",
+                        frequency: "Limited use",
+                        mechanics: "Unleashes a forceful magical blast or shove-like effect.",
+                        summary: "Fun offensive utility item."
+                    },
+                    {
+                        name: "Cloak of Resistance",
+                        level: 9,
+                        traits: "Invested, Magical",
+                        usage: "Worn cloak",
+                        activation: "Passive",
+                        frequency: "Constant",
+                        mechanics: "Improves general survivability and resistance to hostile effects.",
+                        summary: "Strong all-round defensive gear."
+                    },
+                    {
+                        name: "Wand of Chain Lightning",
+                        level: 11,
+                        traits: "Electricity, Magical, Wand",
+                        usage: "Held in 1 hand",
+                        activation: "Cast a Spell",
+                        frequency: "Once per day",
+                        mechanics: "Provides chain lightning once per day.",
+                        summary: "Excellent high-tier blasting wand."
+                    },
+                    {
+                        name: "Wand of Teleport",
+                        level: 13,
+                        traits: "Conjuration, Magical, Wand",
+                        usage: "Held in 1 hand",
+                        activation: "Cast a Spell",
+                        frequency: "Once per day",
+                        mechanics: "Provides powerful travel magic once per day.",
+                        summary: "Very high-value utility item."
+                    },
+                    {
+                        name: "Weapon Property Rune (Flaming)",
+                        level: 8,
+                        traits: "Fire, Magical, Rune",
+                        usage: "Etched on a weapon",
+                        activation: "Passive",
+                        frequency: "Constant",
+                        mechanics: "Adds extra fire damage and often persistent burn pressure.",
+                        summary: "A classic martial damage upgrade."
+                    },
+                    {
+                        name: "Weapon Property Rune (Shock)",
+                        level: 8,
+                        traits: "Electricity, Magical, Rune",
+                        usage: "Etched on a weapon",
+                        activation: "Passive",
+                        frequency: "Constant",
+                        mechanics: "Adds electrical energy damage to attacks.",
+                        summary: "Reliable elemental damage boost."
+                    },
+                    {
+                        name: "Weapon Property Rune (Frost)",
+                        level: 8,
+                        traits: "Cold, Magical, Rune",
+                        usage: "Etched on a weapon",
+                        activation: "Passive",
+                        frequency: "Constant",
+                        mechanics: "Adds cold damage to attacks.",
+                        summary: "Solid elemental upgrade."
+                    }
                 ],
                 consumable: [
-                    { name: "Major Healing Potion", desc: "Restores a very large amount of HP." },
-                    { name: "Scroll of Teleport", desc: "Enables long-range magical travel." },
-                    { name: "Scroll of Chain Lightning", desc: "Unleashes electricity that jumps between foes." },
-                    { name: "Scroll of Wall of Stone", desc: "Creates a solid stone barrier." },
-                    { name: "Scroll of Disintegrate", desc: "Deals severe damage and destroys matter." },
-                    { name: "Scroll of True Seeing (Greater)", desc: "Reveals deceptions and magical disguises." },
-                    { name: "Scroll of Heal (Heightened)", desc: "A stronger restorative spell." },
-                    { name: "Scroll of Harm (Heightened)", desc: "A stronger necromantic assault." },
-                    { name: "Potion of Heroism", desc: "Temporarily makes the drinker more capable." },
-                    { name: "Potion of Stoneskin", desc: "Hardens the body against weapon blows." },
-                    { name: "Potion of Resist Energy", desc: "Grants temporary elemental resistance." },
-                    { name: "Elixir of Life (True)", desc: "An extremely potent restorative draught." },
-                    { name: "Apex Mutagen", desc: "A high-grade mutagen with powerful benefits and drawbacks." },
-                    { name: "Scroll of Wall of Force", desc: "Creates an almost impassable magical barrier." },
-                    { name: "Scroll of Repulsion", desc: "Forces enemies away from an area." },
-                    { name: "Scroll of Stone to Flesh", desc: "Reverses petrification or reshapes matter." },
-                    { name: "Dust of Dryness", desc: "Absorbs large quantities of liquid." },
-                    { name: "Sovereign Glue", desc: "Bonds objects together with near-unbreakable strength." },
-                    { name: "Universal Solvent", desc: "Dissolves nearly any adhesive or binding." },
-                    { name: "Scroll of Plane Shift", desc: "Provides powerful planar transportation." }
+                    {
+                        name: "Major Healing Potion",
+                        level: 12,
+                        traits: "Consumable, Healing, Magical, Potion, Vitality",
+                        usage: "Held in 1 hand",
+                        activation: "Interact",
+                        frequency: "Single use",
+                        mechanics: "Restores a very large amount of HP.",
+                        summary: "Excellent emergency survival item."
+                    },
+                    {
+                        name: "Scroll of Teleport",
+                        level: 11,
+                        traits: "Conjuration, Consumable, Magical, Scroll",
+                        usage: "Held in 1 hand",
+                        activation: "Cast a Spell",
+                        frequency: "Single use",
+                        mechanics: "Enables long-range magical travel.",
+                        summary: "Great campaign utility."
+                    },
+                    {
+                        name: "Scroll of Chain Lightning",
+                        level: 11,
+                        traits: "Consumable, Electricity, Magical, Scroll",
+                        usage: "Held in 1 hand",
+                        activation: "Cast a Spell",
+                        frequency: "Single use",
+                        mechanics: "Electricity arcs between multiple foes.",
+                        summary: "Excellent crowd damage."
+                    },
+                    {
+                        name: "Scroll of Wall of Stone",
+                        level: 11,
+                        traits: "Consumable, Earth, Magical, Scroll",
+                        usage: "Held in 1 hand",
+                        activation: "Cast a Spell",
+                        frequency: "Single use",
+                        mechanics: "Creates a solid stone barrier.",
+                        summary: "Fantastic battlefield control."
+                    },
+                    {
+                        name: "Scroll of Disintegrate",
+                        level: 11,
+                        traits: "Consumable, Magical, Scroll",
+                        usage: "Held in 1 hand",
+                        activation: "Cast a Spell",
+                        frequency: "Single use",
+                        mechanics: "Deals severe damage and can destroy matter.",
+                        summary: "Powerful single-target offense."
+                    },
+                    {
+                        name: "Scroll of Wall of Force",
+                        level: 13,
+                        traits: "Consumable, Force, Magical, Scroll",
+                        usage: "Held in 1 hand",
+                        activation: "Cast a Spell",
+                        frequency: "Single use",
+                        mechanics: "Creates an almost impassable magical barrier.",
+                        summary: "One of the best control scrolls."
+                    },
+                    {
+                        name: "Potion of Heroism",
+                        level: 11,
+                        traits: "Consumable, Emotion, Magical, Mental, Potion",
+                        usage: "Held in 1 hand",
+                        activation: "Interact",
+                        frequency: "Single use",
+                        mechanics: "Temporarily boosts overall effectiveness.",
+                        summary: "Excellent boss-fight consumable."
+                    },
+                    {
+                        name: "Potion of Stoneskin",
+                        level: 11,
+                        traits: "Consumable, Magical, Potion",
+                        usage: "Held in 1 hand",
+                        activation: "Interact",
+                        frequency: "Single use",
+                        mechanics: "Hardens the body against weapon damage.",
+                        summary: "Great front-line protection."
+                    },
+                    {
+                        name: "Potion of Resist Energy",
+                        level: 6,
+                        traits: "Consumable, Magical, Potion",
+                        usage: "Held in 1 hand",
+                        activation: "Interact",
+                        frequency: "Single use",
+                        mechanics: "Grants temporary elemental resistance.",
+                        summary: "Very useful when you know the threat type."
+                    },
+                    {
+                        name: "Dust of Dryness",
+                        level: 8,
+                        traits: "Consumable, Magical",
+                        usage: "Held in 1 hand",
+                        activation: "Interact",
+                        frequency: "Single use",
+                        mechanics: "Absorbs large quantities of liquid.",
+                        summary: "Weird but surprisingly useful utility item."
+                    }
                 ]
             }
         };
@@ -406,12 +1486,10 @@
 
         function getItemPool(level, type) {
             const availableLevels = Object.keys(itemLibrary).map(Number).sort((a, b) => a - b);
-
             let bestLevel = availableLevels[0];
+
             for (const lvl of availableLevels) {
-                if (lvl <= level) {
-                    bestLevel = lvl;
-                }
+                if (lvl <= level) bestLevel = lvl;
             }
 
             return itemLibrary[bestLevel]?.[type] || [];
@@ -422,22 +1500,30 @@
             return shuffled.slice(0, Math.min(count, shuffled.length));
         }
 
+        function renderItemCard(option) {
+            return `
+                <div class="item-card">
+                    <div class="item-name">${option.name} (Item ${option.level})</div>
+                    <div class="meta"><strong>Traits:</strong> ${option.traits}</div>
+                    <div><strong>Usage:</strong> ${option.usage}</div>
+                    <div><strong>Activation:</strong> ${option.activation}</div>
+                    <div><strong>Frequency:</strong> ${option.frequency}</div>
+                    <div><strong>Major mechanics:</strong> ${option.mechanics}</div>
+                    <div class="small-note"><strong>GM summary:</strong> ${option.summary}</div>
+                </div>
+            `;
+        }
+
         function buildItemOptions(items, type) {
             return items.map(item => {
                 const pool = getItemPool(item.level, type);
-                const options = getRandomUniqueItems(pool, Math.min(6, pool.length));
+                const options = getRandomUniqueItems(pool, Math.min(5, pool.length));
 
                 return `
-                    <li>
+                    <div class="slot-block">
                         <strong>${item.count} × level ${item.level} ${type === 'permanent' ? 'permanent item' : 'consumable'}</strong>
-                        <ul>
-                            ${options.map(option => `
-                                <li>
-                                    <strong>${option.name}</strong>: ${option.desc}
-                                </li>
-                            `).join('')}
-                        </ul>
-                    </li>
+                        ${options.map(renderItemCard).join('')}
+                    </div>
                 `;
             }).join('');
         }
@@ -499,16 +1585,12 @@
                 <p><strong>Suggested hoard style:</strong> ${randomHoard}</p>
 
                 <h3>Permanent Item Options</h3>
-                <ul>
-                    ${buildItemOptions(permanentItems, 'permanent')}
-                </ul>
+                ${buildItemOptions(permanentItems, 'permanent')}
 
                 <h3>Consumable Options</h3>
-                <ul>
-                    ${buildItemOptions(consumables, 'consumable')}
-                </ul>
+                ${buildItemOptions(consumables, 'consumable')}
 
-                <p><em>GM note:</em> This gives example options for each treasure slot. Swap freely to fit your campaign, party build, and theme.</p>
+                <p><em>GM note:</em> This uses the official treasure-by-level structure for four PCs and the listed extra-PC adjustments. For smaller parties, it proportionally reduces rewards as a practical approximation. Item text here is paraphrased into short mechanics summaries for easier table use. Higher levels currently reuse the nearest lower detailed item tier.</em></p>
             `;
         }
 
