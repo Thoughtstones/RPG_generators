@@ -1,1 +1,83 @@
 
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Fantasy Forest Name Generator</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f0f8ff;
+            text-align: center;
+            padding: 50px;
+        }
+        h1 {
+            color: #006400;
+        }
+        button {
+            padding: 10px 20px;
+            font-size: 16px;
+            cursor: pointer;
+        }
+        .forest-name {
+            margin-top: 20px;
+            font-size: 24px;
+            font-weight: bold;
+            color: #4682b4;
+        }
+    </style>
+</head>
+<body>
+
+    <h1>Fantasy Forest Name Generator</h1>
+    <button onclick="generateForestName()">Generate Forest Name</button>
+
+    <div class="forest-name" id="forestName"></div>
+
+    <script>
+        const forestPrefixPart1 = [
+            "Whisper", "Shadow", "Emerald", "Moon", "Silver", "Frost", 
+            "Golden", "Ancient", "Enchanted", "Glimmer", "Twilight", "Thorn", 
+            "Crimson", "Mystic", "Silent", "Obsidian", "Verdant", "Sapphire", "Dusk", 
+            "Star", "Elder", "Dark", "Silver", "Storm", "Blood", 
+            "Iron", "Night", "Fire", "Wind", "Grim", "Frost",
+            "Storm", "Ash", "Blue", "Storm", "Lunar", "Bright", 
+            "Wild", "Shadow", "Sun", "Earth", "Spirit", "Iron", 
+            "Misty", "Bronze", "Stone", "Scarlet", "Gloom", "Pale", 
+            "Violet", "Radiant", "Ghost", "Quiet", "Mist"
+        ];
+
+        const forestPrefixPart2 = [
+            "wing", "shadow", "leaf", "thorn", "veil", "whisper", "bark", "root", 
+            "heart", "branch", "crown", "whisper", "thorn", "glow", "wind", 
+            "fall", "bough", "crest", "song", "stone", "fang", "spire", "light", "breeze",
+            "mist", "moon", "song", "blade", "beam", "sky", "ember", "flame", 
+            "cloud", "storm", "bloom", "dew", "grove", "reign", "arc", 
+            "spire", "flame", "pine", "grove", "ember", "echo", 
+            "scar", "feather", "ridge", "rift", "wood", "web", "claw", "bite"
+        ];
+
+        const forestMiddle = [
+            "Boughs", "Grove", "Glade", "Canopy", "Thicket", "Hollows", 
+            "Wilds", "Veil", "Wood", "Heart", 
+            "Forest", "Depths", "Woods", "Tangle", "Haven", 
+            "Glen", "Outlook", "Wilderness", "Labyrinth", "Glade"
+        ];
+
+        function getRandomItem(array) {
+            return array[Math.floor(Math.random() * array.length)];
+        }
+
+        function generateForestName() {
+            const prefix1 = getRandomItem(forestPrefixPart1);
+            const prefix2 = getRandomItem(forestPrefixPart2);
+            const middle = getRandomItem(forestMiddle);
+            const forestName = prefix1 + prefix2 + " " + middle;
+
+            document.getElementById("forestName").innerText = forestName;
+        }
+    </script>
+
+</body>
+</html>
