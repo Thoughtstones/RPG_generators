@@ -43,7 +43,7 @@
 
         #treasure-output {
             margin: 25px auto 0;
-            max-width: 800px;
+            max-width: 900px;
             text-align: left;
             font-size: 18px;
             line-height: 1.5;
@@ -115,94 +115,248 @@
         const itemLibrary = {
             1: {
                 permanent: [
-                    "Weapon Potency +1 rune",
-                    "Armor Potency +1 rune",
-                    "Handwraps of Mighty Blows +1",
-                    "Crafter's Eyepiece",
-                    "Healer's Gloves",
-                    "Bag of Holding (Type I)"
+                    { name: "Healer's Gloves", desc: "Boosts medicine-focused healing and provides a small magical healing effect." },
+                    { name: "Crafter's Eyepiece", desc: "Helps identify items and improves crafting precision." },
+                    { name: "Bag of Holding (Type I)", desc: "Holds far more Bulk than a normal container." },
+                    { name: "Hat of Disguise", desc: "Lets the wearer alter their appearance with illusion magic." },
+                    { name: "Cloak of Elvenkind", desc: "Improves stealth and helps the wearer blend into surroundings." },
+                    { name: "Goggles of Night", desc: "Improves vision in darkness or grants darkvision." },
+                    { name: "Traveler's Any-Tool", desc: "Transforms into many simple tools as needed." },
+                    { name: "Wand of Heal (1st-rank)", desc: "Casts heal once each day." },
+                    { name: "Wand of Magic Missile (1st-rank)", desc: "Fires reliable force bolts once per day." },
+                    { name: "Lifting Belt", desc: "Helps with Athletics tasks and carrying heavy loads." },
+                    { name: "Pendant of the Occult", desc: "Assists with occult knowledge and related magic." },
+                    { name: "Religious Symbol (Blessed)", desc: "A minor divine focus item useful for faithful characters." },
+                    { name: "Feather Token", desc: "A minor magical token with a single-use utility effect." },
+                    { name: "Boots of Bounding", desc: "Improves jumping and mobility." },
+                    { name: "Snarecrafter's Toolkit (Enchanted)", desc: "A magical toolkit suited to traps and snares." },
+                    { name: "Crafters' Toolbelt", desc: "Keeps tools organized and ready at hand." },
+                    { name: "Spellbook of Cantrips", desc: "A magical spellbook containing useful arcane basics." },
+                    { name: "Sturdy Shield (Minor)", desc: "A tougher-than-normal shield for repeated blocking." },
+                    { name: "Handwraps of Mighty Blows +1", desc: "Improves unarmed attacks with magical potency." },
+                    { name: "Weapon Potency Rune +1", desc: "Increases the accuracy of a weapon." },
+                    { name: "Armor Potency Rune +1", desc: "Improves the protective value of armor." },
+                    { name: "Doubling Rings", desc: "Copies runes between paired weapons for easier switching." },
+                    { name: "Everburning Torch", desc: "Produces permanent magical light." },
+                    { name: "Marvelous Miniatures (Assorted)", desc: "Small magical figurines with useful trick effects." }
                 ],
                 consumable: [
-                    "Minor Healing Potion",
-                    "Lesser Antidote",
-                    "Lesser Antiplague",
-                    "Scroll of Magic Missile",
-                    "Scroll of Heal",
-                    "Alchemist's Fire (Lesser)",
-                    "Smokestick",
-                    "Tanglefoot Bag"
+                    { name: "Minor Healing Potion", desc: "Restores a small amount of Hit Points." },
+                    { name: "Lesser Antidote", desc: "Temporarily improves resistance to poison." },
+                    { name: "Lesser Antiplague", desc: "Temporarily improves resistance to disease." },
+                    { name: "Scroll of Heal", desc: "Provides a single cast of heal." },
+                    { name: "Scroll of Magic Missile", desc: "Provides a single cast of magic missile." },
+                    { name: "Scroll of Mage Armor", desc: "Provides temporary magical protection." },
+                    { name: "Scroll of Burning Hands", desc: "Unleashes a short cone of fire." },
+                    { name: "Alchemist's Fire (Lesser)", desc: "Deals fire damage and lingering burn." },
+                    { name: "Acid Flask (Lesser)", desc: "Deals acid damage with some splash." },
+                    { name: "Bottled Lightning (Lesser)", desc: "Deals electricity damage and can leave a foe off-balance." },
+                    { name: "Tanglefoot Bag", desc: "Slows a target with sticky resin." },
+                    { name: "Smokestick", desc: "Creates concealing smoke." },
+                    { name: "Sunrod", desc: "Creates bright light for exploration." },
+                    { name: "Elixir of Life (Minor)", desc: "Restores HP and helps against diseases and poisons." },
+                    { name: "Bravo's Brew", desc: "Bolsters confidence and helps against fear." },
+                    { name: "Cheetah's Elixir", desc: "Increases movement speed for a short time." },
+                    { name: "Eagle-Eye Elixir", desc: "Improves long-range visual awareness." },
+                    { name: "Silversheen", desc: "Temporarily gives a weapon a silvered edge." },
+                    { name: "Cold Iron Blanch", desc: "Temporarily gives a weapon cold iron properties." },
+                    { name: "Oil of Potency", desc: "Temporarily empowers a weapon magically." },
+                    { name: "Potion of Leaping", desc: "Improves jumps and athletic movement." },
+                    { name: "Potion of Swimming", desc: "Improves swimming ability." },
+                    { name: "Scroll of Sanctuary", desc: "Helps ward the user against attacks." },
+                    { name: "Ghost Charge", desc: "A bomb especially useful against incorporeal undead." }
                 ]
             },
+
             2: {
                 permanent: [
-                    "Wand of Heal (1st-rank)",
-                    "Wand of Magic Missile (1st-rank)",
-                    "Cloak of Elvenkind",
-                    "Doubling Rings",
-                    "Goggles of Night",
-                    "Hat of Disguise"
+                    { name: "Wand of Charm", desc: "Casts charm once per day." },
+                    { name: "Wand of Fear", desc: "Casts fear once per day." },
+                    { name: "Wand of Invisibility", desc: "Provides a daily invisibility spell." },
+                    { name: "Cloak of Repute", desc: "Improves social presence and influence." },
+                    { name: "Bracelet of Dashing", desc: "Enhances movement and agile action." },
+                    { name: "Boots of Elvenkind", desc: "Aid sneaking and quiet movement." },
+                    { name: "Bracers of Missile Deflection", desc: "Help defend against ranged attacks." },
+                    { name: "Lenses of Detection", desc: "Aid in locating hidden creatures or magic." },
+                    { name: "Pendant of the Sea", desc: "Useful for water travel and aquatic survival." },
+                    { name: "Hand of the Mage", desc: "Improves telekinetic manipulation." },
+                    { name: "Sleeves of Storage", desc: "Store small items in magically hidden spaces." },
+                    { name: "Armbands of Athleticism", desc: "Enhance climbing, swimming, and physical feats." },
+                    { name: "Staff of Divination (Minor)", desc: "Supports basic divination magic." },
+                    { name: "Staff of Illusion (Minor)", desc: "Supports illusion-based spellcasting." },
+                    { name: "Staff of Evocation (Minor)", desc: "Supports offensive magical blasts." },
+                    { name: "Retrieval Belt", desc: "Makes it easier to draw and organize gear." },
+                    { name: "Phylactery of Faithfulness", desc: "Warns the wearer before major ethical violations." },
+                    { name: "Wayfinder", desc: "A versatile magical compass with expansion options." },
+                    { name: "Shadow Signet", desc: "Helps redirect certain spells around defenses." },
+                    { name: "Doubling Rings", desc: "Shares weapon runes between two held weapons." },
+                    { name: "Lesser Cloak of the Bat", desc: "Aids stealth and sometimes gliding." },
+                    { name: "Magical Thieves' Tools", desc: "Improves disabling traps and opening locks." }
                 ],
                 consumable: [
-                    "Lesser Healing Potion",
-                    "Scroll of Invisibility",
-                    "Scroll of Burning Hands",
-                    "Oil of Potency",
-                    "Bravo's Brew",
-                    "Cheetah's Elixir"
+                    { name: "Lesser Healing Potion", desc: "Restores a moderate amount of HP." },
+                    { name: "Elixir of Life (Lesser)", desc: "Restores HP and offers a modest medical boost." },
+                    { name: "Scroll of Invisibility", desc: "Turns a creature invisible for a short time." },
+                    { name: "Scroll of Disguise Self", desc: "Alters appearance with illusion magic." },
+                    { name: "Scroll of Mirror Image", desc: "Creates decoys that make attacks less likely to hit." },
+                    { name: "Scroll of Restoration", desc: "Helps remove some harmful conditions." },
+                    { name: "Scroll of Resist Energy", desc: "Grants temporary resistance to one energy type." },
+                    { name: "Scroll of Darkvision", desc: "Improves vision in darkness." },
+                    { name: "Invisibility Potion", desc: "Provides a short burst of invisibility." },
+                    { name: "Darkvision Elixir", desc: "Temporarily grants darkvision." },
+                    { name: "Mistform Elixir", desc: "Makes the drinker harder to hit." },
+                    { name: "Stone Fist Elixir", desc: "Strengthens unarmed strikes." },
+                    { name: "Drakeheart Mutagen", desc: "Improves defense but reduces magical flexibility." },
+                    { name: "Quicksilver Mutagen", desc: "Boosts speed and precision at the cost of toughness." },
+                    { name: "Juggernaut Mutagen", desc: "Increases durability and fortitude." },
+                    { name: "Bottled Lightning (Moderate)", desc: "A stronger lightning bomb with useful debuff potential." },
+                    { name: "Acid Flask (Moderate)", desc: "A stronger acid bomb with splash damage." },
+                    { name: "Alchemist's Fire (Moderate)", desc: "A stronger fire bomb with persistent burn." },
+                    { name: "Scroll of Web", desc: "Creates restraining magical webs." },
+                    { name: "Scroll of Glitterdust", desc: "Reveals hidden creatures and hampers vision." }
                 ]
             },
+
             3: {
                 permanent: [
-                    "Staff of Fire (minor)",
-                    "Wand of Fireball (3rd-rank)",
-                    "+1 striking weapon",
-                    "+1 resilient armor",
-                    "Boots of Bounding",
-                    "Pendant of the Occult"
+                    { name: "+1 Striking Weapon", desc: "Improves accuracy and increases weapon damage dice." },
+                    { name: "+1 Resilient Armor", desc: "Improves defenses and saving throws." },
+                    { name: "Staff of Fire (Minor)", desc: "Supports fire-based spellcasting." },
+                    { name: "Staff of Healing (Minor)", desc: "Supports restorative magic." },
+                    { name: "Wand of Fireball", desc: "Casts fireball once per day." },
+                    { name: "Wand of Lightning Bolt", desc: "Casts lightning bolt once per day." },
+                    { name: "Wand of Haste", desc: "Speeds an ally once per day." },
+                    { name: "Wand of Slow", desc: "Hinders an enemy’s actions once per day." },
+                    { name: "Belt of Good Health", desc: "Improves bodily resilience." },
+                    { name: "Cloak of the Bat", desc: "Enhances stealth and mobility in darkness." },
+                    { name: "Horn of Blasting (Lesser)", desc: "Emits a powerful destructive sound." },
+                    { name: "Spiderfoot Boots", desc: "Aid in climbing and moving across difficult surfaces." },
+                    { name: "Gloves of Storing", desc: "Let the wearer stash and retrieve a held item magically." },
+                    { name: "Bag of Holding (Type II)", desc: "A larger extradimensional storage space." },
+                    { name: "Ring of Minor Arcana", desc: "Offers a small magical benefit tied to spellcasting." },
+                    { name: "Chime of Opening", desc: "Opens locks or sealed portals magically." },
+                    { name: "Winged Sandals", desc: "Improve mobility and briefly aid aerial movement." },
+                    { name: "Jade Bauble", desc: "A protective magical charm." },
+                    { name: "Wand of Dispel Magic", desc: "Counters magical effects once per day." },
+                    { name: "Staff of Divination (Greater Minor)", desc: "Improves the utility of divination spells." }
                 ],
                 consumable: [
-                    "Moderate Healing Potion",
-                    "Scroll of Fireball",
-                    "Scroll of Haste",
-                    "Scroll of Slow",
-                    "Elixir of Life (moderate)",
-                    "Invisibility Potion"
+                    { name: "Moderate Healing Potion", desc: "Restores a healthy amount of HP." },
+                    { name: "Greater Elixir of Life", desc: "Restores HP and gives stronger medical support." },
+                    { name: "Scroll of Fireball", desc: "A single cast of fireball." },
+                    { name: "Scroll of Haste", desc: "A single cast of haste." },
+                    { name: "Scroll of Slow", desc: "A single cast of slow." },
+                    { name: "Scroll of Fly", desc: "Lets a creature fly temporarily." },
+                    { name: "Scroll of Water Breathing", desc: "Lets creatures breathe underwater." },
+                    { name: "Scroll of Dispel Magic", desc: "Counters active spells or magical effects." },
+                    { name: "Potion of Flying", desc: "Grants temporary flight." },
+                    { name: "Potion of Water Breathing", desc: "Allows breathing underwater for a time." },
+                    { name: "Potion of Quickness", desc: "Temporarily increases speed and tempo." },
+                    { name: "Scroll of Clairaudience", desc: "Allows remote magical observation." },
+                    { name: "Scroll of Heroism", desc: "Temporarily boosts courage and capability." },
+                    { name: "Scroll of Vampiric Touch", desc: "Deals damage and steals vitality." },
+                    { name: "Ghost Oil", desc: "Helps a weapon affect incorporeal creatures." },
+                    { name: "Silversheen (Greater)", desc: "Temporarily grants stronger silver utility." },
+                    { name: "Cold Iron Blanch (Greater)", desc: "Temporarily grants stronger cold iron utility." },
+                    { name: "Drakeheart Mutagen (Greater)", desc: "A stronger version with better defensive payoff." },
+                    { name: "Quicksilver Mutagen (Greater)", desc: "A stronger speed-and-precision mutagen." },
+                    { name: "Juggernaut Mutagen (Greater)", desc: "A stronger toughness-focused mutagen." }
                 ]
             },
+
             4: {
                 permanent: [
-                    "Wand of Lightning Bolt",
-                    "Bag of Holding (Type II)",
-                    "Belt of Good Health",
-                    "Bracers of Missile Deflection",
-                    "Boots of Elvenkind",
-                    "Staff of Healing (minor)"
+                    { name: "+2 Weapon Potency Rune", desc: "Further improves a weapon’s accuracy." },
+                    { name: "+2 Armor Potency Rune", desc: "Further improves armor protection." },
+                    { name: "Greater Staff of Fire", desc: "A stronger staff for fire spellcasters." },
+                    { name: "Greater Staff of Healing", desc: "A stronger staff for healing magic." },
+                    { name: "Ring of Wizardry", desc: "Expands magical casting potential." },
+                    { name: "Boots of Speed", desc: "Substantially improve battlefield mobility." },
+                    { name: "Cape of the Mountebank", desc: "Supports flashy magical repositioning." },
+                    { name: "Bracers of Armor", desc: "Provide magical defense without conventional armor." },
+                    { name: "Lion Cloak", desc: "Supports intimidation and dramatic presence." },
+                    { name: "Eyes of the Eagle", desc: "Improve precision sight and perception." },
+                    { name: "Horn of Fog", desc: "Creates obscuring fog on command." },
+                    { name: "Staff of Illusion (Greater Minor)", desc: "Improves access to illusion magic." },
+                    { name: "Staff of Necromancy (Minor)", desc: "Supports necromantic spellcasting." },
+                    { name: "Amulet of Mighty Fists", desc: "Empowers unarmed or natural attacks." },
+                    { name: "Handwraps of Mighty Blows +2", desc: "Further enhances unarmed attacks." },
+                    { name: "Wand of Cone of Cold", desc: "Releases a blast of freezing magic daily." },
+                    { name: "Wand of Dimension Door", desc: "Allows short-range teleportation once per day." },
+                    { name: "Spellguard Shield", desc: "Helps defend against magic." },
+                    { name: "Aegis of Arnisant", desc: "A defensive item with layered protection." },
+                    { name: "Energy-Resistant Armor Rune", desc: "Adds protection against elemental damage." }
                 ],
                 consumable: [
-                    "Greater Healing Potion",
-                    "Scroll of Dimension Door",
-                    "Scroll of Stoneskin",
-                    "Ghost Charge",
-                    "Darkvision Elixir",
-                    "Antidote (greater)"
+                    { name: "Greater Healing Potion", desc: "Restores a large amount of HP." },
+                    { name: "Scroll of Dimension Door", desc: "A one-use short-range teleport." },
+                    { name: "Scroll of Stoneskin", desc: "Improves durability against physical harm." },
+                    { name: "Scroll of Wall of Fire", desc: "Creates a barrier of flame." },
+                    { name: "Scroll of Cone of Cold", desc: "Deals cold damage in a broad area." },
+                    { name: "Scroll of Remove Curse", desc: "Helps lift magical curses." },
+                    { name: "Scroll of Restoration", desc: "Removes certain debilitating conditions." },
+                    { name: "Oil of Sharpness", desc: "Briefly makes a weapon cut more effectively." },
+                    { name: "Potion of Invisibility (Greater)", desc: "Longer or more reliable invisibility effect." },
+                    { name: "Potion of Flying (Greater)", desc: "Longer-lasting flight." },
+                    { name: "Potion of Quickness (Greater)", desc: "Longer or stronger speed benefit." },
+                    { name: "Elixir of Life (Major)", desc: "A stronger restorative alchemical draught." },
+                    { name: "Scroll of True Seeing", desc: "Temporarily pierces illusion and deception." },
+                    { name: "Scroll of Freedom of Movement", desc: "Helps ignore restraints and impediments." },
+                    { name: "Scroll of Heroism (Greater)", desc: "A stronger morale and performance boost." },
+                    { name: "Scroll of Black Tentacles", desc: "Creates restraining magical tendrils." },
+                    { name: "Dust of Appearance", desc: "Reveals hidden creatures in an area." },
+                    { name: "Dust of Disappearance", desc: "Turns creatures invisible for a time." },
+                    { name: "Oil of Weightlessness", desc: "Makes objects much easier to carry." },
+                    { name: "Phoenix Flask", desc: "A potent fire-based offensive consumable." }
                 ]
             },
+
             5: {
                 permanent: [
-                    "+2 weapon potency rune",
-                    "+1 striking weapon with property rune",
-                    "Wand of Wall of Fire",
-                    "Ring of Wizardry",
-                    "Cloak of the Bat",
-                    "Phylactery of Faithfulness"
+                    { name: "+2 Striking Weapon", desc: "A major upgrade to both accuracy and weapon damage." },
+                    { name: "+2 Resilient Armor", desc: "A strong defensive armor upgrade." },
+                    { name: "Major Staff of Fire", desc: "Strong support for an offensive fire caster." },
+                    { name: "Major Staff of Healing", desc: "Strong support for a healing caster." },
+                    { name: "Staff of Divination (Major)", desc: "Enhances magical scouting and foresight." },
+                    { name: "Staff of Abjuration (Major)", desc: "Supports defensive and protective magic." },
+                    { name: "Ring of Energy Resistance", desc: "Provides protection against one energy type." },
+                    { name: "Ring of the Ram", desc: "Unleashes forceful magical impacts." },
+                    { name: "Belt of Giant Strength", desc: "Boosts physical power significantly." },
+                    { name: "Headband of Inspired Wisdom", desc: "Supports insight and willpower." },
+                    { name: "Cloak of Resistance", desc: "Improves survivability against many threats." },
+                    { name: "Shadow Signet (Greater)", desc: "Improves spell delivery against defended targets." },
+                    { name: "Wand of Chain Lightning", desc: "Casts chain lightning once per day." },
+                    { name: "Wand of Teleport", desc: "Provides powerful travel magic once per day." },
+                    { name: "Wand of Wall of Stone", desc: "Creates solid barriers once per day." },
+                    { name: "Armor Property Rune (Fortification)", desc: "Helps turn deadly hits into normal ones." },
+                    { name: "Weapon Property Rune (Flaming)", desc: "Adds persistent fiery offense to attacks." },
+                    { name: "Weapon Property Rune (Shock)", desc: "Adds electrical energy to attacks." },
+                    { name: "Weapon Property Rune (Frost)", desc: "Adds cold energy to attacks." },
+                    { name: "Brilliant Rapier", desc: "A magic weapon effective against darkness-themed foes." },
+                    { name: "Demon Mask", desc: "Enhances intimidation and menace." },
+                    { name: "Ring of Sustenance", desc: "Reduces the need for food and rest." }
                 ],
                 consumable: [
-                    "Major Healing Potion",
-                    "Scroll of Cone of Cold",
-                    "Scroll of Dispel Magic",
-                    "Scroll of Remove Curse",
-                    "Elixir of Life (greater)",
-                    "Water Breathing Potion"
+                    { name: "Major Healing Potion", desc: "Restores a very large amount of HP." },
+                    { name: "Scroll of Teleport", desc: "Enables long-range magical travel." },
+                    { name: "Scroll of Chain Lightning", desc: "Unleashes electricity that jumps between foes." },
+                    { name: "Scroll of Wall of Stone", desc: "Creates a solid stone barrier." },
+                    { name: "Scroll of Disintegrate", desc: "Deals severe damage and destroys matter." },
+                    { name: "Scroll of True Seeing (Greater)", desc: "Reveals deceptions and magical disguises." },
+                    { name: "Scroll of Heal (Heightened)", desc: "A stronger restorative spell." },
+                    { name: "Scroll of Harm (Heightened)", desc: "A stronger necromantic assault." },
+                    { name: "Potion of Heroism", desc: "Temporarily makes the drinker more capable." },
+                    { name: "Potion of Stoneskin", desc: "Hardens the body against weapon blows." },
+                    { name: "Potion of Resist Energy", desc: "Grants temporary elemental resistance." },
+                    { name: "Elixir of Life (True)", desc: "An extremely potent restorative draught." },
+                    { name: "Apex Mutagen", desc: "A high-grade mutagen with powerful benefits and drawbacks." },
+                    { name: "Scroll of Wall of Force", desc: "Creates an almost impassable magical barrier." },
+                    { name: "Scroll of Repulsion", desc: "Forces enemies away from an area." },
+                    { name: "Scroll of Stone to Flesh", desc: "Reverses petrification or reshapes matter." },
+                    { name: "Dust of Dryness", desc: "Absorbs large quantities of liquid." },
+                    { name: "Sovereign Glue", desc: "Bonds objects together with near-unbreakable strength." },
+                    { name: "Universal Solvent", desc: "Dissolves nearly any adhesive or binding." },
+                    { name: "Scroll of Plane Shift", desc: "Provides powerful planar transportation." }
                 ]
             }
         };
@@ -251,8 +405,16 @@
         }
 
         function getItemPool(level, type) {
-            const fallbackLevel = Math.min(level, 5);
-            return itemLibrary[fallbackLevel]?.[type] || [];
+            const availableLevels = Object.keys(itemLibrary).map(Number).sort((a, b) => a - b);
+
+            let bestLevel = availableLevels[0];
+            for (const lvl of availableLevels) {
+                if (lvl <= level) {
+                    bestLevel = lvl;
+                }
+            }
+
+            return itemLibrary[bestLevel]?.[type] || [];
         }
 
         function getRandomUniqueItems(pool, count) {
@@ -263,12 +425,17 @@
         function buildItemOptions(items, type) {
             return items.map(item => {
                 const pool = getItemPool(item.level, type);
-                const options = getRandomUniqueItems(pool, Math.min(4, pool.length));
+                const options = getRandomUniqueItems(pool, Math.min(6, pool.length));
+
                 return `
                     <li>
                         <strong>${item.count} × level ${item.level} ${type === 'permanent' ? 'permanent item' : 'consumable'}</strong>
                         <ul>
-                            ${options.map(option => `<li>${option}</li>`).join('')}
+                            ${options.map(option => `
+                                <li>
+                                    <strong>${option.name}</strong>: ${option.desc}
+                                </li>
+                            `).join('')}
                         </ul>
                     </li>
                 `;
