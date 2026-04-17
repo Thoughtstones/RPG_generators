@@ -1,112 +1,107 @@
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Tavern Name Generator</title>
+
     <style>
         body {
             font-family: Arial, sans-serif;
             margin: 20px;
             text-align: center;
         }
+
+        a {
+            display: inline-block;
+            margin-bottom: 15px;
+            text-decoration: none;
+            font-weight: bold;
+        }
+
         #generate-btn {
-            padding: 10px 20px;
-            font-size: 16px;
+            padding: 12px 24px;
+            font-size: 18px;
             cursor: pointer;
         }
+
         #random-name {
             margin-top: 20px;
-            font-size: 24px;
+            font-size: 22px;
             font-weight: bold;
         }
     </style>
 </head>
+
 <body>
+
     <a href="../">⬅ Back to Main Menu</a>
+
     <h1>Tavern Name Generator</h1>
     
     <button id="generate-btn">Generate Random Name</button>
-    <p id="random-name"></p>
+
+    <p id="random-name">Click the button to generate a name</p>
 
     <script>
-        // Sample XML data for full name (First Middle Last)
         const fullNameXmlData = `
         <names>
             <firstNames>
                 <name>Red</name>
                 <name>Black</name>
-		<name>White</name>
+                <name>White</name>
                 <name>Green</name>
                 <name>Silver</name>
                 <name>Gold</name>
                 <name>Golden</name>
                 <name>Blue</name>
-                <name>Red</name>
                 <name>Flying</name>
                 <name>Swimming</name>
                 <name>Fractured</name>
                 <name>Oaken</name>
                 <name>Drunken</name>
                 <name>Savage</name>
-                <name>Drunken</name>
-		<name>Maned</name>
-		<name>Bladed</name>
-		<name>Flaming</name>
+                <name>Maned</name>
+                <name>Bladed</name>
+                <name>Flaming</name>
             </firstNames>
+
             <middleNames>
                 <name>Barrel</name>
                 <name>Dragon</name>
                 <name>Wyvern</name>
                 <name>Dwarf</name>
-                <name>Hairfoot</name>
                 <name>Wyrm</name>
                 <name>Giant</name>
                 <name>Wolf</name>
                 <name>Pirate</name>
-		<name>Lion</name>
-                <name>Masthead</name>
+                <name>Lion</name>
                 <name>Mask</name>
                 <name>Skull</name>
                 <name>Veil</name>
-                <name>Tallwood</name>
-                <name>Sailor</name>
-                <name>Wind</name>
                 <name>Arrow</name>
                 <name>Sword</name>
                 <name>Shield</name>
                 <name>Spear</name>
-                <name>Northstar</name>
-		<name>Shepherd</name>
-		<name>Dagger</name>
-                <name>Warrior</name>
-		<name>Barbarian</name>
-		<name>Eagle</name>
-		<name>Stag</name>
-		<name>Sow</name>
-		<name>Hart</name>
-		<name>Hound</name>
-		<name>Horse</name>
-		<name>Stallion</name>
-		<name>Dryad</name>
-		<name>Beholder</name>
-		<name>Orc</name>
-<name>Fox</name>
-<name>Otter</name>
-<name>God</name>
+                <name>Eagle</name>
+                <name>Stag</name>
+                <name>Hound</name>
+                <name>Horse</name>
+                <name>Dryad</name>
+                <name>Orc</name>
+                <name>Fox</name>
+                <name>Otter</name>
             </middleNames>
+
             <lastNames>
                 <name>Inn</name>
                 <name>Tavern</name>
                 <name>Wayhouse</name>
                 <name>Meadhall</name>
                 <name>Bar</name>
-                <name>Drinking barn</name>
                 <name>Rest</name>
                 <name>Meadery</name>
                 <name>Pub</name>
-                <name>Wayhouse</name>
                 <name>Alehouse</name>
                 <name>Haven</name>
                 <name>Crossroads</name>
@@ -115,7 +110,6 @@
         </names>
         `;
 
-        // Sample XML data for simple name (First Last)
         const simpleNameXmlData = `
         <names>
             <firstNames>
@@ -124,13 +118,11 @@
                 <name>Glassy</name>
                 <name>Blackwood</name>
                 <name>Misty</name>
-                <name>Young</name>
                 <name>Wayward</name>
                 <name>Opal</name>
                 <name>Cavernous</name>
                 <name>Ghostly</name>
                 <name>Hallowed</name>
-                <name>Splinted</name>
                 <name>Long</name>
                 <name>Shadowed</name>
                 <name>Gilded</name>
@@ -142,133 +134,99 @@
                 <name>Crimson</name>
                 <name>Stout</name>
             </firstNames>
+
             <lastNames>
-                <name>Masthead</name>
                 <name>Mask</name>
                 <name>Skull</name>
                 <name>Veil</name>
-                <name>Tallwood</name>
                 <name>Sailor</name>
-                <name>Wind</name>
                 <name>Arrow</name>
                 <name>Sword</name>
                 <name>Shield</name>
                 <name>Spear</name>
                 <name>Northstar</name>
-		<name>Shepherd</name>
-		<name>Dagger</name>
+                <name>Dagger</name>
                 <name>Warrior</name>
-		<name>Barbarian</name>
-		<name>Eagle</name>
-		<name>Blacksmith</name>
+                <name>Eagle</name>
+                <name>Blacksmith</name>
             </lastNames>
         </names>
         `;
 
-        // Sample XML data for other name format
         const otherNameXmlData = `
         <names>
             <firstNames>
-		<name>Heart and</name>
+                <name>Heart and</name>
                 <name>House and</name>
-		<name>Hawk and</name>
+                <name>Hawk and</name>
                 <name>Pike and</name>
                 <name>Cutlass and</name>
-                <name>Glass and</name>
                 <name>Blade and</name>
-		<name>Plough and</name>
+                <name>Plough and</name>
                 <name>Bull and</name>
-		<name>Ram and</name>
-		<name>Lion and</name>
-		<name>Shadow and</name>
+                <name>Ram and</name>
+                <name>Lion and</name>
+                <name>Shadow and</name>
             </firstNames>
+
             <lastNames>
                 <name>King</name>
-		<name>Dagger</name>
                 <name>Queen</name>
                 <name>Rose</name>
                 <name>Thistle</name>
                 <name>Wind</name>
-                <name>Shot</name>
                 <name>Shield</name>
-                <name>Veil</name>
-                <name>Tallwood</name>
-                <name>Sailor</name>
-                <name>Arrow</name>
                 <name>Sword</name>
-                <name>Shield</name>
                 <name>Spear</name>
-		<name>Eagle</name>
-		<name>Anvil</name>
-		<name>Warrior</name>
-		<name>Ghast</name>
-		<name>Grave</name>
-		<name>Glaive</name>
+                <name>Eagle</name>
+                <name>Anvil</name>
+                <name>Warrior</name>
+                <name>Grave</name>
             </lastNames>
         </names>
         `;
 
-        // Function to parse XML and generate a random full name
+        function getRandom(arr) {
+            return arr[Math.floor(Math.random() * arr.length)];
+        }
+
+        function parseXML(xmlString, tag) {
+            const parser = new DOMParser();
+            const xml = parser.parseFromString(xmlString, "text/xml");
+            return Array.from(xml.getElementsByTagName(tag)[0].getElementsByTagName('name'))
+                .map(n => n.textContent);
+        }
+
         function generateRandomFullName() {
-            const parser = new DOMParser();
-            const xmlDoc = parser.parseFromString(fullNameXmlData, "text/xml");
-
-            const firstNames = Array.from(xmlDoc.getElementsByTagName('firstNames')[0].getElementsByTagName('name')).map(node => node.textContent);
-            const middleNames = Array.from(xmlDoc.getElementsByTagName('middleNames')[0].getElementsByTagName('name')).map(node => node.textContent);
-            const lastNames = Array.from(xmlDoc.getElementsByTagName('lastNames')[0].getElementsByTagName('name')).map(node => node.textContent);
-
-            const randomFirst = firstNames[Math.floor(Math.random() * firstNames.length)];
-            const randomMiddle = middleNames[Math.floor(Math.random() * middleNames.length)];
-            const randomLast = lastNames[Math.floor(Math.random() * lastNames.length)];
-
-            return `The ${randomFirst} ${randomMiddle} ${randomLast}`;
+            const first = parseXML(fullNameXmlData, 'firstNames');
+            const middle = parseXML(fullNameXmlData, 'middleNames');
+            const last = parseXML(fullNameXmlData, 'lastNames');
+            return `The ${getRandom(first)} ${getRandom(middle)} ${getRandom(last)}`;
         }
 
-        // Function to parse XML and generate a random simple name
         function generateRandomSimpleName() {
-            const parser = new DOMParser();
-            const xmlDoc = parser.parseFromString(simpleNameXmlData, "text/xml");
-
-            const firstNames = Array.from(xmlDoc.getElementsByTagName('firstNames')[0].getElementsByTagName('name')).map(node => node.textContent);
-            const lastNames = Array.from(xmlDoc.getElementsByTagName('lastNames')[0].getElementsByTagName('name')).map(node => node.textContent);
-
-            const randomFirst = firstNames[Math.floor(Math.random() * firstNames.length)];
-            const randomLast = lastNames[Math.floor(Math.random() * lastNames.length)];
-
-            return `The ${randomFirst} ${randomLast}`;
+            const first = parseXML(simpleNameXmlData, 'firstNames');
+            const last = parseXML(simpleNameXmlData, 'lastNames');
+            return `The ${getRandom(first)} ${getRandom(last)}`;
         }
 
-        // Function to parse XML and generate a random name in the "other" format
         function generateRandomOtherName() {
-            const parser = new DOMParser();
-            const xmlDoc = parser.parseFromString(otherNameXmlData, "text/xml");
-
-            const firstNames = Array.from(xmlDoc.getElementsByTagName('firstNames')[0].getElementsByTagName('name')).map(node => node.textContent);
-            const lastNames = Array.from(xmlDoc.getElementsByTagName('lastNames')[0].getElementsByTagName('name')).map(node => node.textContent);
-
-            const randomFirst = firstNames[Math.floor(Math.random() * firstNames.length)];
-            const randomLast = lastNames[Math.floor(Math.random() * lastNames.length)];
-
-            return `The ${randomFirst} ${randomLast}`;
+            const first = parseXML(otherNameXmlData, 'firstNames');
+            const last = parseXML(otherNameXmlData, 'lastNames');
+            return `The ${getRandom(first)} ${getRandom(last)}`;
         }
 
-        // Function to generate a random name, alternating between full and simple names
         function generateRandomName() {
-            const includeMiddleName = Math.floor(Math.random() * 4) + 1;
-            if (includeMiddleName === 1 || includeMiddleName === 2) {
-                return generateRandomOtherName();
-            } else if (includeMiddleName === 3) {
-                return generateRandomSimpleName();
-            } else {
-                return generateRandomFullName();
-            }
+            const roll = Math.floor(Math.random() * 4);
+            if (roll <= 1) return generateRandomOtherName();
+            if (roll === 2) return generateRandomSimpleName();
+            return generateRandomFullName();
         }
 
-        // Add event listener to button
         document.getElementById('generate-btn').addEventListener('click', () => {
-            const name = generateRandomName();
-            document.getElementById('random-name').textContent = name;
+            document.getElementById('random-name').textContent = generateRandomName();
         });
     </script>
+
 </body>
 </html>
