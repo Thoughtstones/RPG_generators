@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -42,15 +41,9 @@
             margin-top: 10px;
         }
 
-        #random-name {
-            margin-top: 20px;
-            font-size: 22px;
-            font-weight: bold;
-        }
-
         #treasure-output {
             margin: 25px auto 0;
-            max-width: 700px;
+            max-width: 800px;
             text-align: left;
             font-size: 18px;
             line-height: 1.5;
@@ -65,8 +58,12 @@
             text-align: center;
         }
 
+        #treasure-output h3 {
+            margin-bottom: 8px;
+        }
+
         #treasure-output ul {
-            margin-bottom: 0;
+            margin-top: 6px;
         }
     </style>
 </head>
@@ -115,6 +112,101 @@
             20: { total: 490000, currency: 140000, extraCurrency: 35000, permanent: [{ level: 20, count: 4 }], consumables: [{ level: 20, count: 4 }, { level: 19, count: 2 }] }
         };
 
+        const itemLibrary = {
+            1: {
+                permanent: [
+                    "Weapon Potency +1 rune",
+                    "Armor Potency +1 rune",
+                    "Handwraps of Mighty Blows +1",
+                    "Crafter's Eyepiece",
+                    "Healer's Gloves",
+                    "Bag of Holding (Type I)"
+                ],
+                consumable: [
+                    "Minor Healing Potion",
+                    "Lesser Antidote",
+                    "Lesser Antiplague",
+                    "Scroll of Magic Missile",
+                    "Scroll of Heal",
+                    "Alchemist's Fire (Lesser)",
+                    "Smokestick",
+                    "Tanglefoot Bag"
+                ]
+            },
+            2: {
+                permanent: [
+                    "Wand of Heal (1st-rank)",
+                    "Wand of Magic Missile (1st-rank)",
+                    "Cloak of Elvenkind",
+                    "Doubling Rings",
+                    "Goggles of Night",
+                    "Hat of Disguise"
+                ],
+                consumable: [
+                    "Lesser Healing Potion",
+                    "Scroll of Invisibility",
+                    "Scroll of Burning Hands",
+                    "Oil of Potency",
+                    "Bravo's Brew",
+                    "Cheetah's Elixir"
+                ]
+            },
+            3: {
+                permanent: [
+                    "Staff of Fire (minor)",
+                    "Wand of Fireball (3rd-rank)",
+                    "+1 striking weapon",
+                    "+1 resilient armor",
+                    "Boots of Bounding",
+                    "Pendant of the Occult"
+                ],
+                consumable: [
+                    "Moderate Healing Potion",
+                    "Scroll of Fireball",
+                    "Scroll of Haste",
+                    "Scroll of Slow",
+                    "Elixir of Life (moderate)",
+                    "Invisibility Potion"
+                ]
+            },
+            4: {
+                permanent: [
+                    "Wand of Lightning Bolt",
+                    "Bag of Holding (Type II)",
+                    "Belt of Good Health",
+                    "Bracers of Missile Deflection",
+                    "Boots of Elvenkind",
+                    "Staff of Healing (minor)"
+                ],
+                consumable: [
+                    "Greater Healing Potion",
+                    "Scroll of Dimension Door",
+                    "Scroll of Stoneskin",
+                    "Ghost Charge",
+                    "Darkvision Elixir",
+                    "Antidote (greater)"
+                ]
+            },
+            5: {
+                permanent: [
+                    "+2 weapon potency rune",
+                    "+1 striking weapon with property rune",
+                    "Wand of Wall of Fire",
+                    "Ring of Wizardry",
+                    "Cloak of the Bat",
+                    "Phylactery of Faithfulness"
+                ],
+                consumable: [
+                    "Major Healing Potion",
+                    "Scroll of Cone of Cold",
+                    "Scroll of Dispel Magic",
+                    "Scroll of Remove Curse",
+                    "Elixir of Life (greater)",
+                    "Water Breathing Potion"
+                ]
+            }
+        };
+
         function formatGp(value) {
             return `${value.toLocaleString()} gp`;
         }
@@ -138,10 +230,10 @@
 
             for (let i = 0; i < extraCharacters; i++) {
                 if (isConsumable) {
-                    items.push({ level: partyLevel + 1 <= 20 ? partyLevel + 1 : 20, count: 1 });
+                    items.push({ level: Math.min(partyLevel + 1, 20), count: 1 });
                     items.push({ level: partyLevel, count: 1 });
                 } else {
-                    items.push({ level: partyLevel + 1 <= 20 ? partyLevel + 1 : 20, count: 1 });
+                    items.push({ level: Math.min(partyLevel + 1, 20), count: 1 });
                 }
             }
 
@@ -158,14 +250,29 @@
                 .sort((a, b) => b.level - a.level);
         }
 
-        function itemListHtml(items, label) {
-            return `
-                <li><strong>${label}</strong>
-                    <ul>
-                        ${items.map(item => `<li>${item.count} × level ${item.level} item${item.count > 1 ? 's' : ''}</li>`).join('')}
-                    </ul>
-                </li>
-            `;
+        function getItemPool(level, type) {
+            const fallbackLevel = Math.min(level, 5);
+            return itemLibrary[fallbackLevel]?.[type] || [];
+        }
+
+        function getRandomUniqueItems(pool, count) {
+            const shuffled = [...pool].sort(() => Math.random() - 0.5);
+            return shuffled.slice(0, Math.min(count, shuffled.length));
+        }
+
+        function buildItemOptions(items, type) {
+            return items.map(item => {
+                const pool = getItemPool(item.level, type);
+                const options = getRandomUniqueItems(pool, Math.min(4, pool.length));
+                return `
+                    <li>
+                        <strong>${item.count} × level ${item.level} ${type === 'permanent' ? 'permanent item' : 'consumable'}</strong>
+                        <ul>
+                            ${options.map(option => `<li>${option}</li>`).join('')}
+                        </ul>
+                    </li>
+                `;
+            }).join('');
         }
 
         function generateTreasure() {
@@ -224,12 +331,17 @@
                 <p><strong>Currency / valuables:</strong> ${formatGp(currency)}</p>
                 <p><strong>Suggested hoard style:</strong> ${randomHoard}</p>
 
+                <h3>Permanent Item Options</h3>
                 <ul>
-                    ${itemListHtml(permanentItems, 'Permanent Items')}
-                    ${itemListHtml(consumables, 'Consumables')}
+                    ${buildItemOptions(permanentItems, 'permanent')}
                 </ul>
 
-                <p><em>GM note:</em> This uses the official party-treasure-by-level table for four PCs, applies the listed extra rewards for parties above four, and uses a practical proportional reduction for smaller parties.</p>
+                <h3>Consumable Options</h3>
+                <ul>
+                    ${buildItemOptions(consumables, 'consumable')}
+                </ul>
+
+                <p><em>GM note:</em> This gives example options for each treasure slot. Swap freely to fit your campaign, party build, and theme.</p>
             `;
         }
 
