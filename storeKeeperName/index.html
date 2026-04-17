@@ -1,1 +1,1022 @@
 
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Fantasy Storekeeper Generator</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Cinzel&display=swap'); /* Fantasy font */
+
+        body {
+            font-family: 'Cinzel', serif;
+            text-align: center;
+            margin: 0;
+            padding: 0;
+            background: linear-gradient(to bottom, #8A7F7F, #E1DBDB);
+            background-attachment: fixed;
+            background-size: cover;
+        }
+
+        .content-container {
+            //padding: 20px;
+            min-height: 100vh;
+            background: linear-gradient(to bottom, #FFFFFF, #D1C3DB);
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-start;
+            align-items: center; /* Align content to center horizontally */
+        }
+
+        .title-bar {
+            background: linear-gradient(to bottom, #8B0000, #4F0000);
+            padding: 20px 0;
+            width: 100%;
+        }
+
+        h1 {
+            font-family: 'Cinzel', serif;
+            font-size: 2.2em;
+            color: #E0D7D7;
+            margin: 0;
+        }
+		h2{
+		    font-family: 'Cinzel', serif;
+            font-size: 1.6em;
+            color: #E0D7D7;
+            margin: 0;
+		}
+
+        .button-container {
+		padding: 20px;
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center; /* Center the buttons horizontally */
+            gap: 10px; /* Add space between the buttons */
+            max-width: 780px; /* Set a max width to allow for 3 buttons per row */
+        }
+		.textOut{
+		color: white;
+		font-weight: bold;
+		font-family: 'Cinzel', serif;
+		}
+
+        button {
+            width: 250px;
+            height: 50px;
+            padding: 10px;
+            font-size: 16px;
+            font-weight: bold;
+            cursor: pointer;
+            border: none;
+            background-color: #FFD700;
+            color: black;
+            border-radius: 3px;
+            transition: background-color 0.3s ease, color 0.3s ease;
+        }
+
+        button:hover {
+            background-color: #8B0000;
+            color: white;
+        }
+
+        table {
+            width: 50%;
+            background-color: #4F0000;
+            border-spacing: 20px;
+            border-radius: 8px;
+        }
+
+        td {
+            padding: 0px;
+            font-size: 1.1em;
+            color: white;
+            text-align: left;
+            //white-space: pre-wrap;
+        }
+
+        td:first-child {
+            font-weight: bold;
+        }
+
+        #characterDetails {
+		font-family: "Times New Roman", Times, serif;
+            font-size: 1.3em;
+            font-weight: normal;
+            color: #e9bc4c;
+        }
+
+        .heading {
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+    <a href="../">⬅ Back to Main Menu</a>
+    <div class="title-bar">
+        <h1>Fantasy Storekeeper Generator</h1>
+    </div>
+
+    <div class="content-container">
+<div class="button-container">
+    <button onclick="generateStorekeeper('alchemyLab')"><span>Alchemy Lab</span></button>
+    <button onclick="generateStorekeeper('apothecary')"><span>Apothecary</span></button>
+    <button onclick="generateStorekeeper('armorersShop')"><span>Armorer's Shop</span></button>
+    <button onclick="generateStorekeeper('bakery')"><span>Bakery</span></button>
+    <button onclick="generateStorekeeper('beastTrainersPost')"><span>Beast Master</span></button>
+    <button onclick="generateStorekeeper('blacksmithsForge')"><span>Blacksmith's Forge</span></button>
+    <button onclick="generateStorekeeper('bookstore')"><span>Bookstore/Scriptorium</span></button>
+    <button onclick="generateStorekeeper('cartographersShop')"><span>Cartographer's Shop</span></button>
+    <button onclick="generateStorekeeper('cobblersShop')"><span>Cobbler’s Shop</span></button>
+    <button onclick="generateStorekeeper('curioAndRelicShop')"><span>Curio and Relic Shop</span></button>
+    <button onclick="generateStorekeeper('exoticGoodsTrader')"><span>Exotic Goods Trader</span></button>
+    <button onclick="generateStorekeeper('fishmonger')"><span>Fishmonger</span></button>
+    <button onclick="generateStorekeeper('fletchersWorkshop')"><span>Fletcher's Workshop</span></button>
+    <button onclick="generateStorekeeper('furrierTanner')"><span>Furrier/Tanner</span></button>
+    <button onclick="generateStorekeeper('generalProvisioner')"><span>General Provisioner</span></button>
+    <button onclick="generateStorekeeper('glassblowersWorkshop')"><span>Glassblower's Workshop</span></button>
+    <button onclick="generateStorekeeper('jewelersShop')"><span>Jeweler's Shop</span></button>
+    <button onclick="generateStorekeeper('localProduceSeller')"><span>Local Produce Seller</span></button>
+    <button onclick="generateStorekeeper('magicEmporium')"><span>Magic Emporium</span></button>
+    <button onclick="generateStorekeeper('potionShop')"><span>Potion Shop</span></button>
+    <button onclick="generateStorekeeper('shipwrightsYard')"><span>Shipwright's Yard</span></button>
+    <button onclick="generateStorekeeper('tavernInn')"><span>Tavern/Inn</span></button>
+    <button onclick="generateStorekeeper('templeSupplyStore')"><span>Temple Supply Store</span></button>
+    <button onclick="generateStorekeeper('tinkersEmporium')"><span>Tinker’s Emporium</span></button>
+</div>
+
+
+        <table>
+            <tr>
+                <td><h2>Storekeeper Details:</h2><hr></td>
+            </tr>
+            <tr>
+                <td><span id="characterDetails"></span></td>
+            </tr>
+        </table>
+    </div>
+
+    <script>
+        const storekeeperXML = `<storekeeperData>
+    <races>
+        <race name="Half-Orc">
+            <firstNames>
+                <name>Gorash</name>
+                <name>Throg</name>
+                <name>Mordak</name>
+                <name>Ugar</name>
+                <name>Zug</name>
+                <name>Krusk</name>
+                <name>Grum</name>
+                <name>Vorr</name>
+            </firstNames>
+            <lastNames>
+                <name>Ironfist</name>
+                <name>Bloodfang</name>
+                <name>Skullcrusher</name>
+                <name>Warhammer</name>
+                <name>Goreclaw</name>
+                <name>Fleshgnasher</name>
+            </lastNames>
+        </race>
+        <race name="Dwarf">
+            <firstNames>
+                <name>Durin</name>
+                <name>Thrain</name>
+                <name>Borin</name>
+                <name>Gimli</name>
+                <name>Rurik</name>
+                <name>Thaldor</name>
+                <name>Dwalin</name>
+                <name>Thorgar</name>
+            </firstNames>
+            <lastNames>
+                <name>Stonehammer</name>
+                <name>Anvilbeard</name>
+                <name>Ironfoot</name>
+                <name>Bronzebuckle</name>
+                <name>Fireforge</name>
+                <name>Deepdelver</name>
+            </lastNames>
+        </race>
+<race name="Human">
+    <firstNames>
+        <name>Tharun</name> <!-- Fantasy variant of Thane -->
+        <name>Hengrith</name> <!-- Fantasy variant of Hengest -->
+        <name>Alexion</name> <!-- Fantasy variant of Alexios -->
+        <name>Aelwynn</name> <!-- Fantasy variant of Aelfwyn -->
+        <name>Liefar</name> <!-- Fantasy variant of Leif -->
+        <name>Ishtavon</name> <!-- Fantasy variant of Istvan -->
+        <name>Gwenlia</name> <!-- Fantasy variant of Gwenllian -->
+        <name>Eadron</name> <!-- Fantasy variant of Eadric -->
+        <name>Sigrith</name> <!-- Fantasy variant of Sigrid -->
+        <name>Harrowind</name> <!-- Fantasy variant of Hereward -->
+        <name>Matteas</name> <!-- Fantasy variant of Matteo -->
+        <name>Hrothmar</name> <!-- Fantasy variant of Hrothgar -->
+        <name>Cadfaen</name> <!-- Fantasy variant of Cadfael -->
+        <name>Almera</name> <!-- Fantasy variant of Almeda -->
+        <name>Wulfstan</name> <!-- Kept the same, already fantasy-sounding -->
+        <name>Aelithra</name> <!-- Fantasy variant of Aelisia -->
+        <name>Felwynn</name> <!-- Fantasy variant of Felwine -->
+        <name>Merwynne</name> <!-- Fantasy variant of Merewyn -->
+        <name>Thoralde</name> <!-- Fantasy variant of Thorald -->
+        <name>Eirynn</name> <!-- Fantasy variant of Eira -->
+        <name>Ilion</name> <!-- Fantasy variant of Ilya -->
+        <name>Vladirek</name> <!-- Fantasy variant of Vladimir -->
+        <name>Zahrya</name> <!-- Fantasy variant of Zahra -->
+        <name>Renarion</name> <!-- Fantasy variant of Renard -->
+        <name>Isabrya</name> <!-- Fantasy variant of Isabeau -->
+        <name>Ghislarin</name> <!-- Fantasy variant of Ghislaine -->
+        <name>Nikolor</name> <!-- Fantasy variant of Nikolai -->
+        <name>Jhenar</name> <!-- Fantasy variant of Jean -->
+        <name>Alxios</name> <!-- Fantasy variant of Alexei -->
+        <name>Maraquith</name> <!-- Fantasy variant of Marguerite -->
+    </firstNames>
+    <lastNames>
+        <name>Ashharrow</name> <!-- Fantasy variant of Ashhelm -->
+        <name>Fayrweather</name> <!-- Fantasy variant of Fairweather -->
+        <name>Stanhyrr</name> <!-- Fantasy variant of Stanehyrst -->
+        <name>Oakharst</name> <!-- Fantasy variant of Oakenhurst -->
+        <name>Whytacre</name> <!-- Fantasy variant of Whitacre -->
+        <name>Ravensholme</name> <!-- Fantasy variant of Ravenscroft -->
+        <name>Thorskar</name> <!-- Fantasy variant of Thorsen -->
+        <name>Wyndmere</name> <!-- Fantasy variant of Windmere -->
+        <name>Brookhyl</name> <!-- Fantasy variant of Brookholt -->
+        <name>Grimfeldar</name> <!-- Fantasy variant of Grimfeld -->
+        <name>Zsigmard</name> <!-- Fantasy variant of Zsigmond -->
+        <name>Winterbane</name> <!-- Fantasy variant of Winterbourne -->
+        <name>Blakwood</name> <!-- Fantasy variant of Blacwuda -->
+        <name>Thornwilde</name> <!-- Fantasy variant of Thornfeld -->
+        <name>Brightholm</name> <!-- Fantasy variant of Brighthelm -->
+        <name>Silvermyr</name> <!-- Fantasy variant of Silvermere -->
+        <name>Irenwyn</name> <!-- Fantasy variant of Irenwuda -->
+        <name>Eoforn</name> <!-- Fantasy variant of Eoforth -->
+        <name>Stormhyrne</name> <!-- Fantasy variant of Stormhyrst -->
+        <name>Gwynnarion</name> <!-- Fantasy variant of Gwynnedd -->
+        <name>Dubairis</name> <!-- Fantasy variant of Dubois -->
+        <name>Rurikvorn</name> <!-- Fantasy variant of Rurikovich -->
+        <name>Lafairen</name> <!-- Fantasy variant of Lafayette -->
+        <name>Petrovyn</name> <!-- Fantasy variant of Petrovich -->
+        <name>Belmarr</name> <!-- Fantasy variant of Belmont -->
+        <name>Romanar</name> <!-- Fantasy variant of Romanov -->
+        <name>Valaryn</name> <!-- Fantasy variant of Valois -->
+        <name>Vladiron</name> <!-- Fantasy variant of Vladimirovich -->
+        <name>Montcairn</name> <!-- Fantasy variant of Montclair -->
+        <name>Veselan</name> <!-- Fantasy variant of Veselov -->
+    </lastNames>
+</race>
+
+
+        <race name="Half-Ogre">
+            <firstNames>
+                <name>Borak</name>
+                <name>Grom</name>
+                <name>Drek</name>
+                <name>Mokar</name>
+                <name>Groth</name>
+                <name>Orgrash</name>
+            </firstNames>
+            <lastNames>
+                <name>Fistbreaker</name>
+                <name>Cragbash</name>
+                <name>Mountainfury</name>
+                <name>Stonebreaker</name>
+            </lastNames>
+        </race>
+<race name="Elf">
+    <firstNames>
+        <name>Aeloria</name>
+        <name>Lathiriel</name>
+        <name>Faenor</name>
+        <name>Tahlia</name>
+        <name>Selyne</name>
+        <name>Elyndor</name>
+        <name>Ithilien</name>
+        <name>Miriel</name>
+        <name>Caladriel</name>
+        <name>Therion</name>
+        <name>Alariel</name>
+        <name>Vandor</name>
+        <name>Nimreth</name>
+        <name>Elarian</name>
+        <name>Lorien</name>
+        <name>Thalia</name>
+        <name>Rhaelin</name>
+        <name>Isilwen</name>
+        <name>Valandor</name>
+        <name>Serelith</name>
+    </firstNames>
+    <lastNames>
+        <name>Moonwhisper</name>
+        <name>Silverleaf</name>
+        <name>Brightfeather</name>
+        <name>Starglow</name>
+        <name>Dawnstrider</name>
+        <name>Nightshade</name>
+        <name>Starfall</name>
+        <name>Winddancer</name>
+        <name>Sunshadow</name>
+        <name>Leafsong</name>
+        <name>Shimmerbloom</name>
+        <name>Lightbringer</name>
+        <name>Eveningstar</name>
+        <name>Willowsong</name>
+        <name>Moonblossom</name>
+        <name>Frostwhisper</name>
+        <name>Silvershadow</name>
+        <name>Whisperwind</name>
+        <name>Brightbloom</name>
+        <name>Goldleaf</name>
+    </lastNames>
+</race>
+
+<race name="Gnome">
+    <firstNames>
+        <name>Bimble</name>
+        <name>Niv</name>
+        <name>Fizzle</name>
+        <name>Zook</name>
+        <name>Ellywick</name>
+        <name>Tink</name>
+        <name>Pimble</name>
+        <name>Whiz</name>
+        <name>Sprocket</name>
+        <name>Wizzle</name>
+        <name>Fizzbin</name>
+        <name>Drixie</name>
+        <name>Glimmer</name>
+        <name>Jorbin</name>
+        <name>Twizzle</name>
+        <name>Winket</name>
+        <name>Brassie</name>
+        <name>Nimblin</name>
+        <name>Crackle</name>
+        <name>Widget</name>
+    </firstNames>
+    <lastNames>
+        <name>Glitterdust</name>
+        <name>Sparkgear</name>
+        <name>Copperwire</name>
+        <name>Tinkertop</name>
+        <name>Nimbletoes</name>
+        <name>Whistlespark</name>
+        <name>Boltwhisk</name>
+        <name>Gearspinner</name>
+        <name>Brassbell</name>
+        <name>Quickfingers</name>
+        <name>Cogcatcher</name>
+        <name>Tumblesprocket</name>
+        <name>Flickerweld</name>
+        <name>Wrenchwhistle</name>
+        <name>Brightsprock</name>
+        <name>Ironfizz</name>
+        <name>Tinkerflip</name>
+        <name>Rivethand</name>
+        <name>Snapgadget</name>
+        <name>Brightcrank</name>
+    </lastNames>
+</race>
+
+<race name="Halfling">
+    <firstNames>
+        <name>Piprin</name>
+        <name>Loryn</name>
+        <name>Samlen</name>
+        <name>Delsie</name>
+        <name>Milofer</name>
+        <name>Roscarl</name>
+        <name>Toben</name>
+        <name>Brenna</name>
+        <name>Fenley</name>
+        <name>Meryn</name>
+        <name>Willa</name>
+        <name>Jorin</name>
+        <name>Corby</name>
+        <name>Hylia</name>
+        <name>Nimral</name>
+        <name>Rhyla</name>
+        <name>Dorien</name>
+        <name>Kelbin</name>
+        <name>Lidda</name>
+        <name>Thistle</name>
+    </firstNames>
+    <lastNames>
+        <name>Underbrook</name>
+        <name>Hillhopper</name>
+        <name>Greenbranch</name>
+        <name>Lightfoot</name>
+        <name>Brighttoes</name>
+        <name>Swiftmeadow</name>
+        <name>Amberfoot</name>
+        <name>Softleaf</name>
+        <name>Quickstep</name>
+        <name>Oatbelly</name>
+        <name>Tallgrove</name>
+        <name>Mossbarrow</name>
+        <name>Rivervale</name>
+        <name>Applethorn</name>
+        <name>Dewwhisper</name>
+        <name>Thornfield</name>
+        <name>Willowbend</name>
+        <name>Fernwhistle</name>
+        <name>Maplefoot</name>
+        <name>Silverburrow</name>
+    </lastNames>
+</race>
+
+<race name="Catfolk">
+    <firstNames>
+        <name>Shadeclaw</name>
+        <name>Lightpaw</name>
+        <name>Ravenclaw</name>
+        <name>Furren</name>
+        <name>Swiftpaw</name>
+        <name>Nightclaw</name>
+        <name>Whiskerwind</name>
+        <name>Dusktail</name>
+        <name>Silverpaw</name>
+        <name>Clawstrike</name>
+        <name>Stormfur</name>
+        <name>Emberwhisker</name>
+        <name>Fireclaw</name>
+        <name>Darkstride</name>
+        <name>Fleethoof</name>
+        <name>Whisperclaw</name>
+        <name>Shadewhisper</name>
+        <name>Goldeneye</name>
+        <name>Sablepaw</name>
+        <name>Windwhisker</name>
+    </firstNames>
+    <lastNames>
+        <name>Moonshadow</name>
+        <name>Furwhisper</name>
+        <name>Silentstalker</name>
+        <name>Sharpfang</name>
+        <name>Nightstalker</name>
+        <name>Shadowtail</name>
+        <name>Sunrunner</name>
+        <name>Leafstride</name>
+        <name>Windpounce</name>
+        <name>Ironclaw</name>
+        <name>Stonepaw</name>
+        <name>Firetail</name>
+        <name>Softwhisker</name>
+        <name>Whisperfang</name>
+        <name>Flamewhisker</name>
+        <name>Mistshadow</name>
+        <name>Duskmane</name>
+        <name>Moonclaw</name>
+        <name>Starhunter</name>
+        <name>Lightfoot</name>
+    </lastNames>
+</race>
+
+<race name="Half-Elf">
+    <firstNames>
+        <name>Aelin</name>
+        <name>Jorand</name>
+        <name>Elyndor</name>
+        <name>Miriel</name>
+        <name>Sorin</name>
+        <name>Thalina</name>
+        <name>Rhovan</name>
+        <name>Elira</name>
+        <name>Faylen</name>
+        <name>Caelith</name>
+        <name>Laneth</name>
+        <name>Taryn</name>
+        <name>Orien</name>
+        <name>Selanor</name>
+        <name>Zandor</name>
+        <name>Lethara</name>
+        <name>Veren</name>
+        <name>Aelara</name>
+        <name>Korin</name>
+        <name>Daelin</name>
+    </firstNames>
+    <lastNames>
+        <name>Ravenswood</name>
+        <name>Moonshadow</name>
+        <name>Silverlight</name>
+        <name>Duskwhisper</name>
+        <name>Brightstar</name>
+        <name>Windstrider</name>
+        <name>Shadowglade</name>
+        <name>Stormsong</name>
+        <name>Nightbreeze</name>
+        <name>Leafsong</name>
+        <name>Shadowbloom</name>
+        <name>Sunwhisper</name>
+        <name>Starweaver</name>
+        <name>Thornwood</name>
+        <name>Lightkeeper</name>
+        <name>Mistveil</name>
+        <name>Brightwind</name>
+        <name>Dawnstar</name>
+        <name>Ironleaf</name>
+        <name>Stormwhisper</name>
+    </lastNames>
+</race>
+
+    </races>
+
+<personalities>
+    <personality>Gruff and no-nonsense</personality>
+    <personality>Stubborn and proud</personality>
+    <personality>Loyal and hardworking</personality>
+    <personality>Jolly and loud</personality>
+    <personality>Quiet and dedicated</personality>
+    <personality>Short-tempered but skilled</personality>
+    <personality>Mysterious and secretive</personality>
+    <personality>Friendly and talkative</personality>
+    <personality>Cunning and shrewd</personality>
+    <personality>Wise and helpful</personality>
+    <personality>Flamboyant and energetic</personality>
+    <personality>Reserved and thoughtful</personality>
+    <personality>Eccentric and unpredictable</personality>
+    <personality>Mysterious and quiet</personality>
+    <personality>Knowledgeable and kind</personality>
+    <personality>Overly excited about magic items</personality>
+    <personality>Cold and calculating</personality>
+    <personality>Warm and welcoming to customers</personality>
+    <personality>Generous but shrewd</personality>
+    <personality>Loves to talk with customers</personality>
+    <personality>Crafty and reserved</personality>
+    <personality>Incredibly disciplined</personality>
+    <personality>Sarcastic but reliable</personality>
+    <personality>Humble and hardworking</personality>
+    <personality>Charming but manipulative</personality>
+    <personality>Gruff but secretly compassionate</personality>
+    <personality>Stubborn yet deeply sentimental</personality>
+    <personality>Loyal with a hint of stubbornness</personality>
+    <personality>Jolly and prone to embellishing stories</personality>
+    <personality>Quiet but fiercely protective</personality>
+    <personality>Short-tempered with a surprising soft side</personality>
+    <personality>Mysterious with a mischievous streak</personality>
+    <personality>Friendly but forgetful</personality>
+    <personality>Cunning but with a dry sense of humor</personality>
+    <personality>Wise and cryptic in speech</personality>
+    <personality>Flamboyant but easily distracted</personality>
+    <personality>Reserved but with a love of puzzles</personality>
+    <personality>Eccentric and obsessed with strange inventions</personality>
+    <personality>Mysterious but generous to those in need</personality>
+    <personality>Knowledgeable and always curious about new things</personality>
+    <personality>Overly excited about rare gems and artifacts</personality>
+    <personality>Cold but fiercely loyal to friends</personality>
+    <personality>Warm and welcoming but occasionally aloof</personality>
+    <personality>Generous yet never one to miss a bargain</personality>
+    <personality>Loves to talk but often rambles off-topic</personality>
+    <personality>Crafty but surprisingly generous in trades</personality>
+    <personality>Incredibly disciplined, with a rigid daily routine</personality>
+    <personality>Sarcastic yet secretly sentimental</personality>
+    <personality>Humble with an unexpected sense of humor</personality>
+    <personality>Charming and persuasive, but with a code of honor</personality>
+    <personality>Gruff but with a soft spot for animals</personality>
+    <personality>Stubborn and fiercely loyal to family</personality>
+    <personality>Loyal but quick to judge outsiders</personality>
+    <personality>Jolly but easily flustered under pressure</personality>
+    <personality>Quiet with a passion for rare books</personality>
+    <personality>Short-tempered but always fair in business</personality>
+    <personality>Mysterious and often speaks in riddles</personality>
+    <personality>Friendly but secretly insecure</personality>
+    <personality>Cunning and loves to outwit rivals</personality>
+    <personality>Wise and often sought for advice in the town</personality>
+</personalities>
+
+
+<backstories>
+   <store type="blacksmithsForge" name="Blacksmith's Forge">
+    <intro>
+        <story>Once a soldier, now forges weapons for adventurers.</story>
+        <story>A renowned blacksmith exiled from their homeland.</story>
+        <story>Inherited the family forge, continuing a long line of skilled smiths.</story>
+        <story>Forges weapons with magical properties, passed down from an ancient tradition.</story>
+        <story>This blacksmith works tirelessly to perfect their craft.</story>
+    </intro>
+    <conclusion>
+        <story>They specialize in armor for the local militia.</story>
+        <story>Their shop is known for forging indestructible weapons.</story>
+        <story>Many adventurers seek their services for custom-made swords.</story>
+        <story>The blacksmith has a secret technique known only to their family.</story>
+        <story>The blacksmith aims to craft the ultimate weapon.</story>
+    </conclusion>
+</store>
+ <store type="cobblersShop" name="Cobbler">
+        <intro>
+            <story>A master cobbler who crafts footwear for travelers and adventurers alike.</story>
+            <story>Known for their enchanted boots, which are favored by rangers and thieves.</story>
+            <story>Once a shoemaker for royalty, they now work on enchanted shoes for all who can afford them.</story>
+            <story>After years of traveling, they returned home to craft fine shoes with magical enhancements.</story>
+        </intro>
+        <conclusion>
+            <story>They specialize in boots that never wear out, no matter the journey.</story>
+            <story>Their enchanted shoes are said to increase speed and agility for the wearer.</story>
+            <story>Many adventurers seek out their footwear to gain an edge in their travels.</story>
+            <story>They are always looking for rare materials to create the perfect pair of shoes.</story>
+        </conclusion>
+    </store>
+<store type="potionShop" name="Potion Shop">
+    <intro>
+        <story>Trained in the ancient arts of herbalism, this potion maker crafts remedies for adventurers.</story>
+        <story>Learned potion making from a wandering alchemist and now experiments with new ingredients.</story>
+        <story>Once a healer, now runs a potion shop after their hometown was destroyed by war.</story>
+        <story>A former mage who discovered their talent for brewing potions.</story>
+    </intro>
+    <conclusion>
+        <story>They are known for their healing elixirs and strange concoctions.</story>
+        <story>Their potions are sought after by adventurers and townsfolk alike.</story>
+        <story>The potion maker is always experimenting with new recipes and formulas.</story>
+        <story>The storekeeper aims to find the perfect cure for any ailment.</story>
+    </conclusion>
+</store>
+ <store type="beastTrainersPost" name = "Beast Master">
+        <intro>
+            <story>A former ranger who now trains beasts for adventurers and nobles alike.</story>
+            <story>Once a beast tamer in a distant land, they now offer their services in training mounts and exotic animals.</story>
+            <story>This beast trainer specializes in training loyal companions for adventurers heading into dangerous lands.</story>
+            <story>After years of working with wild animals, they opened this post to share their expertise with others.</story>
+        </intro>
+        <conclusion>
+            <story>They are known for training the most reliable and fierce animal companions in the region.</story>
+            <story>Many adventurers come to them to find and train the perfect mount or companion for their travels.</story>
+            <story>They are always looking for rare and exotic beasts to train and sell.</story>
+            <story>Their reputation as a skilled beast trainer has spread far beyond the local lands.</story>
+        </conclusion>
+    </store>
+<store type="magicEmporium" name="Magic Emporium">
+    <intro>
+        <story>A former court mage, now sells magical artifacts to fund their research into forgotten spells.</story>
+        <story>An explorer who collected rare magical items during their travels.</story>
+        <story>Born into a family of powerful mages, this storekeeper uses their magic to enchant items.</story>
+        <story>Specializes in magical items of protection, which are favored by local warriors.</story>
+    </intro>
+    <conclusion>
+        <story>They hope to rediscover long-lost spells of great power.</story>
+        <story>Their shop is filled with rare scrolls and enchanted trinkets.</story>
+        <story>Adventurers come to the shop for powerful protective amulets.</story>
+        <story>The mage is seeking the lost knowledge of an ancient civilization.</story>
+    </conclusion>
+</store>
+    <store type="bakery" name ="Bakery">
+        <intro>
+            <story>A master baker who specializes in creating delicious bread and pastries.</story>
+            <story>They learned their craft in a prestigious bakery before opening their own shop.</story>
+            <story>Known for their mouth-watering cakes and pies, this baker is a favorite in the community.</story>
+            <story>Once a wandering chef, they settled down to focus on creating the finest baked goods in the region.</story>
+        </intro>
+        <conclusion>
+            <story>Their bakery is famous for its sweet treats, drawing customers from far and wide.</story>
+            <story>Adventurers often stop by to buy provisions for their long journeys.</story>
+            <story>They are known for experimenting with new recipes, always looking to surprise their customers.</story>
+            <story>Their bread and pastries are the best in town, with locals lining up every morning for fresh goods.</story>
+        </conclusion>
+    </store>
+ <store type="alchemyLab" name="Alchemical Lab">
+        <intro>
+            <story>Once an apprentice to a famous alchemist, now runs their own lab.</story>
+            <story>This alchemist is known for their keen understanding of magical reagents.</story>
+            <story>They began as a potion maker but soon turned to the art of alchemical crafting.</story>
+            <story>After years of research, they opened this lab to perfect the art of transmutation.</story>
+        </intro>
+        <conclusion>
+            <story>Their lab is known for producing the highest quality reagents in the region.</story>
+            <story>Many adventurers visit their lab to purchase rare alchemical ingredients.</story>
+            <story>They are working on a new device that could revolutionize potion crafting.</story>
+            <story>Their reputation for precision and quality has attracted attention from distant lands.</story>
+        </conclusion>
+    </store>
+
+<store type="generalProvisioner" name="General Provisioner">
+    <intro>
+        <story>A former trader, now selling a variety of goods from far-off lands.</story>
+        <story>Once a peddler on the roads, now runs a general store to settle down after years of travel.</story>
+        <story>This provisioner is known for their rare goods, brought in from all corners of the world.</story>
+        <story>Runs a family-owned general store that has been in the village for generations.</story>
+    </intro>
+    <conclusion>
+        <story>Their shop is a bustling hub for the local adventuring community.</story>
+        <story>They pride themselves on providing everything an adventurer might need.</story>
+        <story>Their shop stocks rare items not found anywhere else in the village.</story>
+        <story>The provisioner is always looking for new, exciting items to add to their inventory.</story>
+    </conclusion>
+</store>
+
+<store type="jewelersShop" name="Jeweler's Shop">
+    <intro>
+        <story>A master jeweler, famous for creating magical gems for the elite.</story>
+        <story>Once a treasure hunter, now crafts exquisite jewelry from the gems they discovered.</story>
+        <story>Born into a long line of jewelers, this artisan is known for their precision.</story>
+        <story>Forges intricate jewelry with enchantments to aid adventurers.</story>
+    </intro>
+    <conclusion>
+        <story>Their shop is frequented by nobles and adventurers alike.</story>
+        <story>Their jewelry is rumored to hold powerful enchantments.</story>
+        <story>Many believe that their gemstones can grant great power or fortune.</story>
+        <story>The jeweler is always seeking new, rare materials to work with.</story>
+    </conclusion>
+</store>
+
+<store type="apothecary" name="Apothecary">
+    <intro>
+        <story>A skilled herbalist, trained in the art of healing through plants.</story>
+        <story>This apothecary learned their craft in a remote village.</story>
+        <story>They focus on blending traditional medicine with alchemical concoctions.</story>
+        <story>After saving their village from a plague, they opened an apothecary.</story>
+    </intro>
+    <conclusion>
+        <story>They are often sought out for their healing salves and tonics.</story>
+        <story>Their reputation for curing difficult illnesses has spread far and wide.</story>
+        <story>Their apothecary stocks remedies for ailments no one else can cure.</story>
+        <story>They are rumored to be working on a cure for a deadly, unknown disease.</story>
+    </conclusion>
+</store>
+
+<store type="bookstore" name="Bookstore/Scriptorium">
+    <intro>
+        <story>A scholar who dedicated their life to collecting rare and forgotten texts.</story>
+        <story>Once a scribe, now the keeper of an ancient library.</story>
+        <story>This bookstore specializes in ancient tomes and magical scrolls.</story>
+        <story>A former adventurer, now sells scrolls and books collected from distant lands.</story>
+    </intro>
+    <conclusion>
+        <story>Their collection is considered the finest in the region.</story>
+        <story>Many adventurers come to the bookstore for lost knowledge.</story>
+        <story>They specialize in rare books containing forgotten spells and lore.</story>
+        <story>Scholars from distant lands seek their vast collection of ancient texts.</story>
+    </conclusion>
+</store>
+
+<store type="tavernInn" name="Tavern/Inn">
+    <intro>
+        <story>A former adventurer who now runs the most popular inn in town.</story>
+        <story>Once a renowned chef, they now serve hearty meals to weary travelers.</story>
+        <story>The innkeeper’s stories of adventure attract many to their tavern.</story>
+        <story>After inheriting the family tavern, they turned it into a famous establishment.</story>
+    </intro>
+    <conclusion>
+        <story>The inn is known for its warmth, hospitality, and lively atmosphere.</story>
+        <story>Many travelers stop here for a night’s rest and a hearty meal.</story>
+        <story>Adventurers gather here to share tales and find work.</story>
+        <story>The innkeeper is always looking for new stories from travelers and adventurers.</story>
+    </conclusion>
+</store>
+
+<store type="fletchersWorkshop" name="Fletcher's Workshop">
+    <intro>
+        <story>A master fletcher, known for crafting the finest arrows in the land.</story>
+        <story>This fletcher’s skills with a bow are only matched by their craftsmanship.</story>
+        <story>Once a hunter, now they craft bows and arrows for adventurers.</story>
+        <story>They specialize in creating bows imbued with magical properties.</story>
+    </intro>
+    <conclusion>
+        <story>Adventurers seek their workshop for custom arrows and enchanted bows.</story>
+        <story>Their arrows are known to fly true, even in the harshest conditions.</story>
+        <story>They can craft arrows capable of piercing even the strongest armor.</story>
+        <story>Their shop is known for producing the finest bows and arrows in the region.</story>
+    </conclusion>
+</store>
+
+<store type="armorersShop" name="Armorer's Shop">
+    <intro>
+        <story>A former knight, now crafts armor for the next generation of warriors.</story>
+        <story>This armorer specializes in creating shields and armor with defensive enchantments.</story>
+        <story>Once a soldier, they now focus on forging the strongest defensive gear.</story>
+        <story>Their armory has been passed down through generations, each perfecting the craft.</story>
+    </intro>
+    <conclusion>
+        <story>They specialize in armor designed to withstand even the mightiest blows.</story>
+        <story>Many adventurers come to them for custom-made shields and armor.</story>
+        <story>Their armor is known to have saved countless lives on the battlefield.</story>
+        <story>They now seek to craft the ultimate set of armor, worthy of legends.</story>
+    </conclusion>
+</store>
+    <store type="tinkersEmporium" name="Tinkerer's workshop">
+        <intro>
+            <story>Once an engineer in a royal workshop, now runs a small tinker's shop.</story>
+            <story>This tinker is known for their inventive gadgets and mechanical creations.</story>
+            <story>After an accident during an experiment, they left their guild and opened their own shop.</story>
+            <story>They specialize in creating intricate mechanical devices, from clockwork tools to automaton helpers.</story>
+        </intro>
+        <conclusion>
+            <story>Their gadgets are highly sought after by adventurers looking for creative solutions to their problems.</story>
+            <story>Their shop is filled with strange devices, many of which are one-of-a-kind.</story>
+            <story>They are constantly experimenting with new materials to create ever more impressive inventions.</story>
+            <story>Many believe their next invention could change the world.</story>
+        </conclusion>
+    </store>
+	    <store type="templeSupplyStore" name="Temple Supplier">
+        <intro>
+            <story>A devout follower of the gods, this shopkeeper deals in holy items and divine relics.</story>
+            <story>Once a cleric, they now provide adventurers with sacred items for their journeys.</story>
+            <story>They specialize in finding and restoring ancient relics to their former power.</story>
+            <story>This shopkeeper was once a temple caretaker, now they sell religious artifacts and holy supplies.</story>
+        </intro>
+        <conclusion>
+            <story>Their store is known for its collection of rare and powerful holy relics.</story>
+            <story>Adventurers come to them for divine protection and blessings before heading into dangerous lands.</story>
+            <story>They are always searching for new relics to add to their collection.</story>
+            <story>Many believe the artifacts in their possession hold great power.</story>
+        </conclusion>
+    </store>
+<store type="exoticGoodsTrader" name="Exotic Goods Trader">
+    <intro>
+        <story>A former traveler who now sells rare goods collected from far-off lands.</story>
+        <story>Once a caravan master, they now trade in exotic items from across the world.</story>
+        <story>This shop is known for its strange and exotic items not found elsewhere.</story>
+        <story>They specialize in rare goods from foreign lands, each with its own unique history.</story>
+    </intro>
+    <conclusion>
+        <story>Adventurers and nobles alike seek out their shop for rare and valuable items.</story>
+        <story>The trader is always searching for new treasures to bring back to their shop.</story>
+        <story>Many of the items in their shop are said to have mysterious origins and unknown powers.</story>
+        <story>They are known to hold auctions for their rarest items, drawing collectors from all over.</story>
+    </conclusion>
+</store>
+    <store type="localProduceSeller" name="Fresh Produce Seller">
+        <intro>
+            <story>A humble farmer who sells fresh produce grown on their family farm.</story>
+            <story>This produce seller takes great pride in their carefully cultivated fruits and vegetables.</story>
+            <story>Once a merchant, they returned to their roots to focus on selling the best local produce.</story>
+            <story>They run a small but bustling market stand, offering the freshest food in town.</story>
+        </intro>
+        <conclusion>
+            <story>Adventurers often stop by for fresh supplies before heading out on long journeys.</story>
+            <story>They are known for selling the best apples and pumpkins in the region.</story>
+            <story>Local townsfolk rely on them for the highest quality produce in the market.</story>
+            <story>They are always experimenting with new growing techniques to improve their harvests.</story>
+        </conclusion>
+    </store>
+    <store type="shipwrightsYard" name="Shipwright">
+        <intro>
+            <story>A master shipbuilder who once crafted vessels for the navy, now runs their own shipyard.</story>
+            <story>This shipwright specializes in building fast, sturdy ships for merchants and adventurers alike.</story>
+            <story>After years at sea, they returned to land to create ships capable of crossing the most dangerous waters.</story>
+            <story>They learned shipbuilding in a distant port and brought their skills home to build ships for local sailors.</story>
+        </intro>
+        <conclusion>
+            <story>Their ships are known for their durability and speed, even in rough waters.</story>
+            <story>Many sailors come to them when they need a custom-built vessel for long voyages.</story>
+            <story>They are always looking for new materials to craft the ultimate seafaring ship.</story>
+            <story>Their shipyard is renowned for producing the finest vessels in the region.</story>
+        </conclusion>
+    </store>
+    <store type="glassblowersWorkshop" name="Glassblower">
+        <intro>
+            <story>A master glassblower, known for their intricate glass vials and enchanted glassware.</story>
+            <story>They began as an apprentice in a large city but soon surpassed their teacher in skill.</story>
+            <story>After learning the art of glassblowing, they opened their own workshop to focus on enchanted glass items.</story>
+            <story>This glassblower is famous for crafting glassware that enhances the magic of potions stored within.</story>
+        </intro>
+        <conclusion>
+            <story>Their enchanted glass vials are highly sought after by potion makers and alchemists alike.</story>
+            <story>Many believe their glass items can amplify the magic of whatever is stored inside.</story>
+            <story>They are constantly experimenting with new techniques to make their glassware even more powerful.</story>
+            <story>Adventurers and mages alike come to them for enchanted bottles and glass items.</story>
+        </conclusion>
+    </store>
+    <store type="furrierTanner" name="Furrier/Tanner">
+        <intro>
+            <story>A furrier who learned the art of tanning from their ancestors.</story>
+            <story>Once a hunter, now they focus on crafting leather armor and goods from the animals they once hunted.</story>
+            <story>They travel far and wide to find the rarest pelts for their furs and leather.</story>
+            <story>After a successful career as a trapper, they settled down and opened their own tannery.</story>
+        </intro>
+        <conclusion>
+            <story>They are known for crafting the finest fur coats and leather armor in the region.</story>
+            <story>Adventurers seek them out for custom-made hide armor and leather goods.</story>
+            <story>They are always on the hunt for rare animals whose pelts can be turned into extraordinary items.</story>
+            <story>Their tannery is known for its high-quality work and unique designs.</story>
+        </conclusion>
+    </store>
+    <store type="fishmonger" name="Fishmonger">
+        <intro>
+            <story>A skilled fisherman who now sells the finest catch of the day.</story>
+            <story>They grew up by the sea, learning the trade from their family before opening their own fish stall.</story>
+            <story>Once a sailor, they now focus on bringing the freshest fish to market.</story>
+            <story>This fishmonger is known for their knowledge of rare and exotic sea creatures.</story>
+        </intro>
+        <conclusion>
+            <story>Many adventurers come to them for supplies before heading out to sea.</story>
+            <story>They are known for selling rare and valuable fish that are hard to find anywhere else.</story>
+            <story>Their stall is famous for its fresh and delicious seafood, a favorite among locals and travelers alike.</story>
+            <story>They are always searching for new and rare catches to bring to their customers.</story>
+        </conclusion>
+    </store>
+    <store type="cartographersShop" name="Cartographer">
+        <intro>
+            <story>A skilled cartographer who has traveled the world creating maps for adventurers.</story>
+            <story>Once a navigator on an explorer’s ship, now they offer maps and navigation tools.</story>
+            <story>They specialize in creating detailed maps of dangerous regions and uncharted lands.</story>
+            <story>After years of exploration, they opened a shop to sell their maps and charts.</story>
+        </intro>
+        <conclusion>
+            <story>Their maps are known for their accuracy, even in the most treacherous territories.</story>
+            <story>Adventurers and explorers come to them for guidance before embarking on dangerous quests.</story>
+            <story>They are constantly updating their maps as new lands are discovered and charted.</story>
+            <story>Their shop is a treasure trove of geographical knowledge, sought after by scholars and adventurers alike.</story>
+        </conclusion>
+    </store>
+<store type="curioAndRelicShop" name="Curios and Relics">
+        <intro>
+            <story>A collector of rare and ancient artifacts, now selling them to adventurers.</story>
+            <story>Their shop is filled with strange and mysterious items from distant lands.</story>
+            <story>Once an archaeologist, now they sell relics to fund their expeditions.</story>
+            <story>Their love for strange curiosities led them to open this unique shop.</story>
+        </intro>
+        <conclusion>
+            <story>Their customers are often adventurers seeking powerful relics.</story>
+            <story>Many believe their shop holds powerful secrets from the past.</story>
+            <story>They are always on the lookout for rare and valuable items.</story>
+            <story>Their shop has become a hub for collectors of ancient artifacts.</story>
+        </conclusion>
+    </store>
+<!-- Continue this pattern for the other stores... -->
+
+</backstories>
+
+
+<adventureHooks>
+    <hook>A recent shipment of rare materials has gone missing, and the storekeeper needs help finding it.</hook>
+    <hook>Rumors of a powerful artifact have surfaced, and the storekeeper asks for assistance in locating it.</hook>
+    <hook>A rival merchant is trying to steal customers, and the storekeeper seeks someone to sabotage their efforts.</hook>
+    <hook>Strange creatures have been attacking customers near the shop, and the storekeeper needs adventurers to protect them.</hook>
+    <hook>The storekeeper recently acquired a mysterious item that seems cursed, and they need help investigating its origin.</hook>
+    <hook>A powerful enemy from the storekeeper’s past has returned, threatening their livelihood.</hook>
+    <hook>The storekeeper discovered a hidden map inside a relic, and they need adventurers to follow it to its treasure.</hook>
+    <hook>A rare ingredient or material has been stolen from the shop, and the storekeeper offers a reward for its recovery.</hook>
+    <hook>The shop's main supplier has been kidnapped, and the storekeeper needs someone to rescue them.</hook>
+    <hook>The storekeeper's prized possession, a rare artifact, has been stolen, and they are offering a significant reward for its return.</hook>
+    <hook>The storekeeper has been approached by a mysterious figure offering a dangerous deal and needs advice on whether to proceed.</hook>
+    <hook>Adventurers who visited the shop recently have gone missing, and the storekeeper suspects foul play.</hook>
+    <hook>A strange illness has spread among the storekeeper’s livestock or goods, and they need help finding the source.</hook>
+    <hook>The storekeeper's shop is being haunted by a restless spirit, and they need someone to investigate and exorcise it.</hook>
+    <hook>The local guild is threatening to shut down the store unless the storekeeper can prove their goods are superior to the competition.</hook>
+    <hook>The storekeeper's apprentice has vanished, and they fear the young assistant has gotten into trouble with a criminal group.</hook>
+    <hook>A powerful noble has issued a challenge to the storekeeper, claiming their products are inferior and demanding proof otherwise.</hook>
+    <hook>The storekeeper has uncovered a forgotten contract that binds them to dangerous obligations they cannot fulfill alone.</hook>
+    <hook>A cursed relic that was thought to be dormant has begun causing chaos in the store, and the storekeeper needs help controlling it.</hook>
+    <hook>A rare shipment of goods is being targeted by bandits, and the storekeeper needs someone to escort it safely.</hook>
+    <hook>One of the storekeeper's old adventuring companions is in need of assistance, and they are asking the storekeeper to assemble a team.</hook>
+    <hook>The storekeeper has been framed for a crime they didn’t commit, and they need help clearing their name.</hook>
+    <hook>A rival storekeeper has been spreading lies and damaging the shop's reputation, and the storekeeper seeks a way to stop them.</hook>
+    <hook>The storekeeper has found an ancient recipe for a powerful item but needs rare ingredients from dangerous locations.</hook>
+    <hook>Strange omens have been appearing around the shop, and the storekeeper fears something terrible is coming.</hook>
+    <hook>The storekeeper is being blackmailed by a secret organization and needs someone to break free of their control.</hook>
+    <hook>Customers have reported strange visions and hallucinations after visiting the shop, and the storekeeper is concerned it may be connected to a new item they've acquired.</hook>
+    <hook>The storekeeper's store has been marked with a mysterious symbol that no one can identify, and they fear it is a bad omen.</hook>
+    <hook>A valuable customer has been kidnapped by a local gang, and the storekeeper is desperate to get them back unharmed.</hook>
+    <hook>The storekeeper has recently discovered an ancient prophecy that ties their shop to a dangerous future event.</hook>
+    <hook>Magical energies have begun radiating from the shop's basement, and the storekeeper needs help investigating the source.</hook>
+    <hook>The storekeeper is being extorted by a powerful mage and needs help finding a way to free themselves from the mage’s control.</hook>
+    <hook>All the shop’s stock of enchanted items has mysteriously lost its magic overnight, and the storekeeper is desperate to restore it.</hook>
+    <hook>A group of adventurers has arrived claiming the storekeeper sold them a cursed item, and now they demand compensation.</hook>
+    <hook>A local cult has taken an interest in one of the shop’s rare items, and the storekeeper needs help keeping them at bay.</hook>
+    <hook>The storekeeper's magical artifact is slowly draining the life force of everyone in the vicinity, and they need help to safely dispose of it.</hook>
+    <hook>A strange creature has been sighted lurking around the shop at night, and the storekeeper fears it's connected to their latest acquisition.</hook>
+</adventureHooks>
+</storekeeperData>`; // Your XML data
+
+function generateStorekeeper(shopType) {
+            const parser = new DOMParser();
+            const xmlDoc = parser.parseFromString(storekeeperXML, "application/xml");
+
+            // Get random race
+            const races = xmlDoc.getElementsByTagName('race');
+            const randomRaceIndex = Math.floor(Math.random() * races.length);
+            const race = races[randomRaceIndex];
+
+            // Get random first and last name
+            const firstNames = race.getElementsByTagName('firstNames')[0].getElementsByTagName('name');
+            const lastNames = race.getElementsByTagName('lastNames')[0].getElementsByTagName('name');
+            const randomFirstName = firstNames[Math.floor(Math.random() * firstNames.length)].textContent;
+            const randomLastName = lastNames[Math.floor(Math.random() * lastNames.length)].textContent;
+
+            // Get random personality
+            const personalities = xmlDoc.getElementsByTagName('personality');
+            const randomPersonality = personalities[Math.floor(Math.random() * personalities.length)].textContent;
+    // Get store details by shop type
+    const storeBackstories = xmlDoc.querySelector(`store[type="${shopType}"]`);
+    const storeName = storeBackstories.getAttribute('name');  // Get the name attribute of the store
+    const intros = storeBackstories.getElementsByTagName('intro')[0].getElementsByTagName('story');
+    const conclusions = storeBackstories.getElementsByTagName('conclusion')[0].getElementsByTagName('story');
+    const randomIntro = intros[Math.floor(Math.random() * intros.length)].textContent;
+    const randomConclusion = conclusions[Math.floor(Math.random() * conclusions.length)].textContent;
+	
+
+
+            // Get random adventure hook
+            const adventureHooks = xmlDoc.getElementsByTagName('hook');
+            const randomHook = adventureHooks[Math.floor(Math.random() * adventureHooks.length)].textContent;
+
+            // Display the generated storekeeper details
+document.getElementById('characterDetails').innerHTML = 
+    `<span class ='textOut'>Name:</span> ${randomFirstName} ${randomLastName}<br><br>` +
+    `<span class ='textOut'>Race:</span> ${race.getAttribute('name')}<br><br>` +
+        `<span class ='textOut'>Shop type:</span> ${storeName}<br><br>` +  // Display the store name here
+    `<span class ='textOut'>Personality:</span><br>${randomPersonality}<br><br>` +
+    `<span class ='textOut'>Backstory:</span><br> ${randomIntro} ${randomConclusion}<br><br>` +
+    `<span class ='textOut'>Adventure Hook:</span><br>${randomHook}`;
+  }
+    </script>
+</body>
+</html>
